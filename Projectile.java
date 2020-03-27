@@ -2,6 +2,7 @@ public abstract class Projectile extends Entity implements Movable, Damaging{
     // Projectile Variables
     protected int attackDamage;
     protected final int turnShotFromPlant;
+    protected final String projectileType;
 
     // Movable Variables
     protected int direction; // (Kiri ke Kanan)
@@ -13,12 +14,14 @@ public abstract class Projectile extends Entity implements Movable, Damaging{
         int representation,
         String name,
         int actionTime,
-        Tile tile
+        Tile tile,
+        String projectileType
     ){
         super(representation, name, actionTime, tile);
         this.attackDamage = attackDamage;
         this.turnShotFromPlant = turnShotFromPlant;
         this.direction = direction;
+        this.projectileType = projectileType;
     }
 
     /**
@@ -40,6 +43,13 @@ public abstract class Projectile extends Entity implements Movable, Damaging{
      */
     public int getDirection() {
         return direction;
+    }
+
+    /**
+     * @return the projectileType
+     */
+    public String getProjectileType() {
+        return projectileType;
     }
 
     /**

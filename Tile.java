@@ -2,124 +2,162 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Tile{
-    protected List<Entity> entities = new ArrayList<Entity>();
-    protected String tileEntityRepresentation;
+    protected Plant plant;
+    protected List<Zombie> zombies = new ArrayList<Zombie>();
+    protected List<Projectile> projectiles = new ArrayList<Projectile>();
 
-    public Tile(){
-        this.tileEntityRepresentation = " ";
+    public Tile(){}
+
+    public Plant getPlant() {
+        return plant;
     }
 
-    public List<Entity> getEntities(){
-        return this.entities;
+    public List<Projectile> getProjectiles() {
+        return projectiles;
     }
 
-    public String getTileEntityRepresentation() {
-        return tileEntityRepresentation;
+    public List<Zombie> getZombies() {
+        return zombies;
     }
 
-    public void setTileEntityRepresentation(String tileEntityRepresentation) {
-        this.tileEntityRepresentation = tileEntityRepresentation;
+    public void addPlant(Plant plant) {
+        if (this.plant != null) {
+            System.out.println("You cannot plant " + plant.getName() + "Because this tile already have a " + this.plant.getName());
+        } else {
+            this.plant = plant;
+        }
     }
 
-    public void setEntities(List<Entity> entities) {
-        this.entities = entities;
+    public void removePlant(){
+        this.plant = null;
     }
 
-    public void addEntity(Entity entity){
-        if (entity.getClass().getSuperclass().getSimpleName().equals("Plant")) {
-            if (this.hasSuperClass("Plant")) {
-                System.out.println("You cannot plant " + entity.getName() + " because this tile has already have a plant");
+    public void setProjectiles(List<Projectile> projectiles) {
+        this.projectiles = projectiles;
+    }
+
+    public void addProjectile(Projectile projectile){
+        this.projectiles.add(projectile);
+    }
+
+    public void removeFirstProjectile(){
+        this.removeProjectile(0);
+    }
+
+    public void removeProjectile(int i){
+        if (i < projectiles.size()) {
+            this.projectiles.remove(i);
+        }
+    }
+    
+    public void removeFirstZombie(){
+        this.zombies.remove(0);
+    }
+
+    public void removeZombie(int i){
+        if (i < zombies.size()) {
+            this.removeZombie(0);
+        }
+    }
+
+    public void processProjectiles(){
+        int i = 0;
+        while (zombies.size() > 0 && projectiles.size() > 0) {
+            int zombieHP = this.zombies.get(i).getCurrentHealth();
+            int projectileDamage = this.projectiles.get(0).getAttackDamage();
+            this.zombies.get(i).setCurrentHealth(zombieHP - projectileDamage);
+            
+            this.removeFirstProjectile();
+
+            if (this.zombieCheck(i)) {
+                i++;
+            }
+        }
+    }
+
+    public void turnPass(){
+        this.processProjectiles();
+
+        if (plant != null) {
+            plant.turnPass();
+        }
+        
+        if (projectiles.size() > 0) {
+            for (Projectile projectile : projectiles) {
+                projectile.turnPass();
+            }
+        }
+
+        if (zombies.size() > 0){
+            for (Zombie zombie : zombies) {
+                zombie.turnPass();
+            }
+        }
+    }
+
+    public boolean zombieCheck(int i){
+        if (i < zombies.size()) {
+            if (zombies.get(i).getCurrentHealth() < 0) {
+                zombies.remove(i);
+                return true;
             } else {
-                System.out.println(entity.getName() + " planted successfully");
-                this.entities.add(entity);
-                this.setTileEntityRepresentation(entity.getRepresentation());
+                return false;
             }
         } else {
-            this.entities.add(entity);
-            this.setTileEntityRepresentation(entity.getRepresentation());
+            return false;
         }
     }
 
-    public void removeEntity(int i){
-        this.entities.remove(i);
-        if (this.entities.size() == 0) {
-            this.tileEntityRepresentation = " ";
-        } else {
-            this.tileEntityRepresentation = this.entities.get(0).getRepresentation();
-        }
+    public void setZombies(List<Zombie> zombies) {
+        this.zombies = zombies;
     }
-
-    public void removeFirst(){
-        if (this.entities.size() > 0){
-            this.removeEntity(0);
-        }
+    
+    public void addZombie(Zombie zombie){
+        this.zombies.add(zombie);
     }
 
     public void print(){
-        System.out.print(this.getTileEntityRepresentation());
-    }
-
-    public void printInfo(){
-        if(this.entities.size() == 0){
-            System.out.println("There's nothing in this tile");
+        if (plant != null) {
+            System.out.print(plant.getRepresentation());
         } else {
-            System.out.print("This tile contains " + this.entities.size() + " objects: ");
-            for (Entity entity : entities) {
-                System.out.print(entity.getRepresentation());
-            }
-            System.out.print("\n");
-        }
-    }
-
-    
-    public List<Entity> getEntities(String className){
-        List<Entity> temp = new ArrayList<Entity>();
-        for (Entity entity : entities) {
-            if (entity.getClass().getSuperclass().getSimpleName().equals(className)) {
-                temp.add(entity);
-            }
-        }
-        return temp;
-    }
-    
-    public List<Integer> getEntitiesIndexListFromSuperclass(String className){
-        List<Integer> temp = new ArrayList<Integer>();
-        for (int i = 0; i < entities.size(); i++) {
-            if (entities.get(i).getClass().getSuperclass().getSimpleName().equals(className)) {
-                temp.add(Integer.valueOf(i));
-            }
-        }
-        return temp;
-    }
-    public boolean hasSuperClass(String className){
-        boolean hasFlag = false;
-        int size = entities.size();
-        if (size == 0){
-            return hasFlag;
-        } else {
-            int counter = 0;
-            while(!hasFlag && counter < size) {
-                String entityName = entities.get(counter).getClass().getSuperclass().getSimpleName();
-                if (entityName.equals(className)) {
-                    hasFlag = true;
+            if (zombies.size() > 0) {
+                System.out.print(zombies.get(0).getRepresentation());
+            } else {
+                if (projectiles.size() > 0) {
+                    System.out.print(projectiles.get(0).getRepresentation());
+                } else {
+                    System.out.print(" ");
                 }
-                counter += 1;
             }
         }
-        return hasFlag;
     }
 
-    public void 
-    
-    public void nextTurn() {
-        
-        for (int i = 0; i < entities.size(); i++) {
-            this.entities.get(i).turnPass();
+    public void printDetail(){
+        if (plant != null) {
+            System.out.println("Plant: " + plant.getName() + " " + plant.getRepresentation());
+        } else {
+            System.out.println("No plant on this tile");
+        }
+
+        if (zombies.size() > 0) {
+            System.out.print("Zombie(" + zombies.size() + "): ");
+            for (Zombie zombie : zombies) {
+                System.out.print(zombie.getRepresentation() + "(" + zombie.getCurrentHealth() + ") ");
+            }
+            System.out.println("");
+        } else {
+            System.out.println("No zombie on this tile");
+        }
+
+        if (projectiles.size() > 0) {
+            System.out.print("Projectile(" + projectiles.size() + "): ");
+            for (Projectile projectile : projectiles){
+                System.out.print(projectile.getRepresentation());
+            }
+            System.out.println();
+        } else {
+            System.out.println("No projectile on this tile");
         }
     }
-    public static void main(String[] args) {
-        Tile tile = new Tile();
-        tile.addEntity(new Sunflower(1, tile));
-        System.out.println(tile.hasSuperClass("Plant"));
-    }
+
 }

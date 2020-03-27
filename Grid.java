@@ -2,5 +2,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Grid {
-    protected List<Tile> row = new ArrayList<Tile>();
+    protected List<Row> rows = new ArrayList<Row>();
+    
+
 }

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Row {
     protected List<Tile> tiles = new ArrayList<Tile>();
-    protected int size;
+    protected final int size;
 
     public Row(int size){
         this.size = size;
@@ -26,8 +26,5 @@ public class Row {
         return size;
     }
 
-    public void moveEntity(int src, int dest){
-        List<Entity> srcEnt = this.tiles.get(src).getEntities();
-        srcEnt.
-    }
+    
 }

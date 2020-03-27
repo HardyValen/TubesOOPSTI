@@ -21,7 +21,7 @@ public class Peashooter extends Plant{
     }
 
     public void shoot(){
-        this.tile.getEntities().add(new PeaProjectile(Game.turn, 1, this.getTile()));
+        this.tile.addProjectile(new PeaProjectile(Game.turn, 1, this.getTile()));
     }
 
     public void print(){

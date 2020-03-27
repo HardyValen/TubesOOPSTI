@@ -3,7 +3,7 @@ public class BucketheadZombie extends Zombie{
     public BucketheadZombie(int spawnedTurn, Tile tile){
         super(
             spawnedTurn,    // Turn Spawned
-            150,             // Max Health
+            120,             // Max Health
             -1,             // Direction
             0x1f602,        // 😂
             "Buckethead Zombie",// Entity Name

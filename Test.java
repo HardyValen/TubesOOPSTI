@@ -4,19 +4,13 @@ import java.util.List;
 class Test{
     public static void main(String[] args) {
         Tile tile = new Tile();
-        tile.addEntity(new BucketheadZombie(1, tile));
-        tile.addEntity(new BucketheadZombie(1, tile));
-        tile.addEntity(new PeaProjectile(1, 1, tile));
-        tile.addEntity(new PeaProjectile(2, 1, tile));
-        tile.addEntity(new PeaProjectile(3, 1, tile));
-        
-        Tile tile2 = new Tile();
-        tile2 = tile;
-        tile2.removeEntity(1);
-        for (Entity entity : tile2.getEntities()) {
-            System.out.println(entity.getName());
-        }
+        tile.addZombie(new BucketheadZombie(1, tile));
+        tile.addPlant(new Peashooter(1, tile));
 
-        tile.setEntities(tile2.entities);
+        tile.printDetail();
+        tile.turnPass();
+        tile.turnPass();
+        tile.turnPass();
+        tile.printDetail();
     }
 }

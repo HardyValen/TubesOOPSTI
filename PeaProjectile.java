@@ -7,7 +7,8 @@ public class PeaProjectile extends Projectile{
             0x2022,             // •
             "Pea Projectile",   // Projectile Name
             1,                   // Action Time (Move Time)
-            tile                 
+            tile,
+            "normal"                 
         );
     }
 
