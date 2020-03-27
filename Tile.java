@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
 
-class Tile{
+public class Tile{
     protected List<Entity> entities = new ArrayList<Entity>();
     protected String tileEntityRepresentation;
 
@@ -21,30 +21,21 @@ class Tile{
         this.tileEntityRepresentation = tileEntityRepresentation;
     }
 
-        public void addEntity(Entity entity){
-        String entityClass = entity.getClass().getSuperclass().getName();
-        if (entityClass.equals("Plant")){
-            boolean plantCheck = false;
-            int i = 0;
-            Entity plant = null;
+    public void setEntities(List<Entity> entities) {
+        this.entities = entities;
+    }
 
-            if (entities.size() != 0) {
-                while (i < entities.size() || !plantCheck){
-                    if (entities.get(i).getClass().getSuperclass().getName().equals("Plant")){
-                        plantCheck = true;
-                        plant = entities.get(i);
-                    }
-                    i++;
-                }
-            }
-
-            if (plantCheck) {
-                System.out.println("You cannot add a " + entity.getName() + " because you already placed a " + plant.getName() + " here");
+    public void addEntity(Entity entity){
+        if (entity.getClass().getSuperclass().getSimpleName().equals("Plant")) {
+            if (this.hasSuperClass("Plant")) {
+                System.out.println("You cannot plant " + entity.getName() + " because this tile has already have a plant");
             } else {
+                System.out.println(entity.getName() + " planted successfully");
                 this.entities.add(entity);
+                this.setTileEntityRepresentation(entity.getRepresentation());
             }
-        }
-        if (this.entities.size() == 0) {
+        } else {
+            this.entities.add(entity);
             this.setTileEntityRepresentation(entity.getRepresentation());
         }
     }
@@ -53,11 +44,19 @@ class Tile{
         this.entities.remove(i);
         if (this.entities.size() == 0) {
             this.tileEntityRepresentation = " ";
+        } else {
+            this.tileEntityRepresentation = this.entities.get(0).getRepresentation();
         }
     }
 
     public void removeFirst(){
-        this.removeEntity(0);
+        if (this.entities.size() > 0){
+            this.removeEntity(0);
+        }
+    }
+
+    public void print(){
+        System.out.print(this.getTileEntityRepresentation());
     }
 
     public void printInfo(){
@@ -72,28 +71,55 @@ class Tile{
         }
     }
 
-    public static void main(String[] args) {
-        // List<List<Integer>> matrix = new ArrayList<List<Integer>>();
+    
+    public List<Entity> getEntities(String className){
+        List<Entity> temp = new ArrayList<Entity>();
+        for (Entity entity : entities) {
+            if (entity.getClass().getSuperclass().getSimpleName().equals(className)) {
+                temp.add(entity);
+            }
+        }
+        return temp;
+    }
+    
+    public List<Integer> getEntitiesIndexListFromSuperclass(String className){
+        List<Integer> temp = new ArrayList<Integer>();
+        for (int i = 0; i < entities.size(); i++) {
+            if (entities.get(i).getClass().getSuperclass().getSimpleName().equals(className)) {
+                temp.add(Integer.valueOf(i));
+            }
+        }
+        return temp;
+    }
+    public boolean hasSuperClass(String className){
+        boolean hasFlag = false;
+        int size = entities.size();
+        if (size == 0){
+            return hasFlag;
+        } else {
+            int counter = 0;
+            while(!hasFlag && counter < size) {
+                String entityName = entities.get(counter).getClass().getSuperclass().getSimpleName();
+                if (entityName.equals(className)) {
+                    hasFlag = true;
+                }
+                counter += 1;
+            }
+        }
+        return hasFlag;
+    }
 
-        // for(int i = 0; i < 5; i++){
-        //     List<Integer> column = new ArrayList<Integer>();
-        //     for(int j = 0; j < 10; j++){
-        //         column.add(Integer.valueOf(j));
-        //     }
-        //     matrix.add(column);
-        // }
-
-        // for (List<Integer> list : matrix) {
-        //     for (Integer data : list) {
-        //         System.out.print(data);
-        //     }
-        //     System.out.print("\n");
-        // }
-        Tile tile = new Tile();
-        Sunflower flowey = new Sunflower(10);
-        Sunflower rose = new Sunflower(11);
-        tile.addEntity(flowey);
-        tile.addEntity(rose);
+    public void 
+    
+    public void nextTurn() {
         
+        for (int i = 0; i < entities.size(); i++) {
+            this.entities.get(i).turnPass();
+        }
+    }
+    public static void main(String[] args) {
+        Tile tile = new Tile();
+        tile.addEntity(new Sunflower(1, tile));
+        System.out.println(tile.hasSuperClass("Plant"));
     }
 }

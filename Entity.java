@@ -1,13 +1,21 @@
-public class Entity{
-    protected String representation;
-    protected String name;
+public abstract class Entity{
+    protected final String representation;
+    protected final String name;
+    protected final int actionTime;
+    protected int actionCD;
+    protected Tile tile;
 
-    public Entity(int representation){
+    public Entity(
+        int representation, 
+        String name,
+        int actionTime,
+        Tile tile
+    ){ 
         this.representation = new StringBuilder().appendCodePoint(representation).toString();
-    }
-
-    public Entity(){
-        this.representation = " ";
+        this.actionTime = actionTime;
+        this.actionCD = actionTime;
+        this.name = name;
+        this.tile = tile;
     }
 
     /**
@@ -25,13 +33,62 @@ public class Entity{
     }
 
     /**
-     * @param name the name to set
+     * @return the actionCD
      */
-    public void setName(String name) {
-        this.name = name;
+    public int getActionCD() {
+        return actionCD;
     }
 
-    public void turnPass(){}
+    /**
+     * @return the actionTime
+     */
+    public int getActionTime() {
+        return actionTime;
+    }
 
+    /**
+     * @return the tile
+     */
+    public Tile getTile() {
+        return tile;
+    }
 
+    /**
+     * @param actionCD the actionCD to set
+     */
+    public void setActionCD(int actionCD) {
+        this.actionCD = actionCD;
+    }
+
+    /**
+     * @param tile the tile to set
+     */
+    public void setTile(Tile tile) {
+        this.tile = tile;
+    }
+
+    public void refreshActionCD(){
+        this.setActionCD(this.getActionTime());
+    }
+
+    public void decreaseActionCD(){
+        this.setActionCD(this.getActionCD() - 1);
+    }
+
+    public void turnPass(){
+        if (this.actionCD == 0) {
+            this.refreshActionCD();
+        } else {
+            this.decreaseActionCD();
+        }
+    }
+
+    public void print(){
+        System.out.println("Entity Stats:");
+        System.out.println("Entity Representation: " + this.getRepresentation());
+        System.out.println("Entity Name: " + this.getName());
+        System.out.println("Entity Action Time: " + this.getActionTime());
+        System.out.println("Entity Action Cooldown:" + this.getActionCD());
+        System.out.println("");
+    }
 }

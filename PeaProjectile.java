@@ -1,12 +1,14 @@
 public class PeaProjectile extends Projectile{
-    public PeaProjectile(int turnShotFromPlant, int projectileDamage){
+    public PeaProjectile(int turnShotFromPlant, int direction, Tile tile){
         super(
-            projectileDamage,
-            1,                   // MovementTime
+            4,                  // Standard Damage
+            turnShotFromPlant,  // Turn Shot from Plant
+            direction,
             0x2022,             // •
-            "Pea Projectile"    // Projectile Name
+            "Pea Projectile",   // Projectile Name
+            1,                   // Action Time (Move Time)
+            tile                 
         );
-        this.turnShotFromPlant = turnShotFromPlant;
     }
 
     public void print(){
@@ -14,8 +16,7 @@ public class PeaProjectile extends Projectile{
         System.out.println("A small projectile that damages zombies somewhat");
     }
 
-    public static void main(String[] args) {
-        PeaProjectile pea = new PeaProjectile(0, 10);
-        pea.print();
+    public void turnPass() {
+        super.turnPass();
     }
 }

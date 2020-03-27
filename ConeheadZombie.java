@@ -1,11 +1,11 @@
-public class NormalZombie extends Zombie{
+public class ConeheadZombie extends Zombie{
  
-    public NormalZombie(int spawnedTurn, Tile tile){
+    public ConeheadZombie(int spawnedTurn, Tile tile){
         super(
             spawnedTurn,    // Turn Spawned
-            40,             // Max Health
+            90,             // Max Health
             -1,             // Direction
-            0x1f636,        // 😶
+            0x1f606,        // 😆
             "Normal Zombie",// Entity Name
             5,              // Action Time
             4,              // Attack Damage
@@ -15,6 +15,6 @@ public class NormalZombie extends Zombie{
 
     public void print(){
         super.print();
-        System.out.println("An ordinary zombie");
+        System.out.println("A zombie with cone in the hat");
     }
 }

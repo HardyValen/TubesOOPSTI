@@ -1,33 +1,34 @@
-public abstract class Plant extends Entity implements Printable, Damageable{
+public abstract class Plant extends Entity implements Damageable{
+    // Plant Variables
+    protected final int plantRechargeTime;
+    protected int plantRechargeCD;
+    protected final int spCost;
+    protected final int plantedTurn;
+
+    // Damageable Variables
     protected int maxHealth;
     protected int currentHealth;
-    protected int plantedTurn;
-    protected int spCost;
-    protected int rechargeTime;
-    protected int rechargeCooldown;
 
     public Plant(
         int maxHealth,
         int plantedTurn,
         int spCost,
-        int rechargeTime,
+        int plantRechargeTime,
+        int representation,
         String name,
-        int representation
+        int actionTime,
+        Tile tile
     ){
-        super(representation);
+        super(representation, name, actionTime, tile);
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
         this.plantedTurn = plantedTurn;
         this.spCost = spCost;
-        this.rechargeTime = rechargeTime;
-        Double initCooldown = Math.ceil(rechargeTime * 0.4);
-        this.rechargeCooldown = initCooldown.intValue();
-        this.name = name;
+        this.plantRechargeTime = plantRechargeTime;
+        Double initCD = Math.ceil(plantRechargeTime * 0.4);
+        this.plantRechargeCD = initCD.intValue();
     }
 
-    /**
-     * @return the currentHealth
-     */
     public int getCurrentHealth() {
         return currentHealth;
     }
@@ -40,17 +41,24 @@ public abstract class Plant extends Entity implements Printable, Damageable{
     }
 
     /**
+     * @return the plantRechargeCD
+     */
+    public int getPlantRechargeCD() {
+        return plantRechargeCD;
+    }
+
+    /**
+     * @return the plantRechargeTime
+     */
+    public int getPlantRechargeTime() {
+        return plantRechargeTime;
+    }
+
+    /**
      * @return the plantedTurn
      */
     public int getPlantedTurn() {
         return plantedTurn;
-    }
-
-    /**
-     * @return the rechargeTime
-     */
-    public int getRechargeTime() {
-        return rechargeTime;
     }
 
     /**
@@ -61,13 +69,6 @@ public abstract class Plant extends Entity implements Printable, Damageable{
     }
 
     /**
-     * @return the rechargeCooldown
-     */
-    public int getRechargeCooldown() {
-        return rechargeCooldown;
-    }
-
-    /**
      * @param currentHealth the currentHealth to set
      */
     public void setCurrentHealth(int currentHealth) {
@@ -75,51 +76,33 @@ public abstract class Plant extends Entity implements Printable, Damageable{
     }
 
     /**
-     * @param maxHealth the maxHealth to set
+     * @param plantRechargeCD the plantRechargeCD to set
      */
-    public void setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth;
+    public void setPlantRechargeCD(int plantRechargeCD) {
+        this.plantRechargeCD = plantRechargeCD;
     }
 
-    /**
-     * @param plantedTurn the plantedTurn to set
-     */
-    public void setPlantedTurn(int plantedTurn) {
-        this.plantedTurn = plantedTurn;
+    public void refreshPlantRechargeCD(){
+        this.setPlantRechargeCD(this.getPlantRechargeTime());
     }
 
-    /**
-     * @param rechargeTime the rechargeTime to set
-     */
-    public void setRechargeTime(int rechargeTime) {
-        this.rechargeTime = rechargeTime;
+    public void damageByAmount(int a) {
+        this.setCurrentHealth(this.getCurrentHealth() - a);
     }
 
-    /**
-     * @param spCost the spCost to set
-     */
-    public void setSpCost(int spCost) {
-        this.spCost = spCost;
-    }
-
-    /**
-     * @param rechargeCooldown the rechargeCooldown to set
-     */
-    public void setRechargeCooldown(int rechargeCooldown) {
-        this.rechargeCooldown = rechargeCooldown;
-    }
-
-    public void damageByAmount(int amount) {
-        this.currentHealth -= amount;
+    public void refreshHealth() {
+        this.setCurrentHealth(this.getMaxHealth());
     }
 
     public void print(){
-        System.out.println("Plant Name: " + this.getName() + " " + this.getRepresentation());
+        super.print();
         System.out.println("Plant Stats:");
-        System.out.println("\tMax Health: " + this.getMaxHealth());
-        System.out.println("\tCurrent Health: " + this.getCurrentHealth());
-        System.out.println("\tSP Cost: " + this.getSpCost());
-        System.out.println("\tRecharge Time: " + this.getRechargeTime());
-        System.out.println("\tAvailability Cooldown: " + this.getRechargeCooldown());
+        System.out.println("Max Health: " + this.getMaxHealth());
+        System.out.println("Current Health: " + this.getCurrentHealth());
+        System.out.println("Planted Turn: " + this.getPlantedTurn());
+        System.out.println("SP Cost: " + this.getSpCost());
+        System.out.println("Plant Recharge Time: " + this.getPlantRechargeTime());
+        System.out.println("Plant Recharge Cooldown: " + this.getPlantRechargeCD());
+        System.out.println("");
     }
 }

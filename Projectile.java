@@ -1,25 +1,31 @@
-public abstract class Projectile extends Entity implements Printable{
-    protected int movementTime;
-    protected int projectileDamage;
-    protected int turnShotFromPlant;
+public abstract class Projectile extends Entity implements Movable, Damaging{
+    // Projectile Variables
+    protected int attackDamage;
+    protected final int turnShotFromPlant;
+
+    // Movable Variables
+    protected int direction; // (Kiri ke Kanan)
 
     public Projectile(
-        int projectileDamage,
-        int movementTime,
+        int attackDamage,
+        int turnShotFromPlant,
+        int direction,
         int representation,
-        String name
+        String name,
+        int actionTime,
+        Tile tile
     ){
-        super(representation);
-        this.projectileDamage = projectileDamage;
-        this.movementTime = movementTime;
-        this.name = name;
+        super(representation, name, actionTime, tile);
+        this.attackDamage = attackDamage;
+        this.turnShotFromPlant = turnShotFromPlant;
+        this.direction = direction;
     }
 
     /**
-     * @return the projectileDamage
+     * @return the attackDamage
      */
-    public int getProjectileDamage() {
-        return projectileDamage;
+    public int getAttackDamage() {
+        return attackDamage;
     }
 
     /**
@@ -29,40 +35,34 @@ public abstract class Projectile extends Entity implements Printable{
         return turnShotFromPlant;
     }
 
-
     /**
-     * @return the movementTime
+     * @return the direction
      */
-    public int getMovementTime() {
-        return movementTime;
+    public int getDirection() {
+        return direction;
     }
 
     /**
-     * @param projectileDamage the projectileDamage to set
+     * @param direction the direction to set
      */
-    public void setProjectileDamage(int projectileDamage) {
-        this.projectileDamage = projectileDamage;
+    public void setDirection(int direction) {
+        this.direction = direction;
     }
 
     /**
-     * @param turnShotFromPlant the turnShotFromPlant to set
+     * @param attackDamage the attackDamage to set
      */
-    public void setTurnShotFromPlant(int turnShotFromPlant) {
-        this.turnShotFromPlant = turnShotFromPlant;
+    public void setAttackDamage(int attackDamage) {
+        this.attackDamage = attackDamage;
     }
 
-    /**
-     * @param movementTime the movementTime to set
-     */
-    public void setMovementTime(int movementTime) {
-        this.movementTime = movementTime;
-    }
-
-    public void print(){
-        System.out.println("Projectile Name: " + this.getName() + " " + this.getRepresentation());
+    @Override
+    public void print() {
+        super.print();
         System.out.println("Projectile Stats:");
-        System.out.println("\tMovementTime: " + this.getMovementTime());
-        System.out.println("\tProjectile Damage: " + this.getProjectileDamage());
-        System.out.println("\tShotted At: " + this.getTurnShotFromPlant());
+        System.out.println("Projectile Damage: " + this.getAttackDamage());
+        System.out.println("Turn Shot From Plant:" + this.getTurnShotFromPlant());
+        System.out.println("Direction :" + this.getDirection());
+        System.out.println("");
     }
 }

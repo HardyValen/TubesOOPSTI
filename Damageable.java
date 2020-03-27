@@ -1,3 +1,8 @@
 public interface Damageable {
-    public abstract void damageByAmount(int amount);
+    // Deklarasikan maxHealth, currentHealth
+    public abstract int getCurrentHealth();
+    public abstract int getMaxHealth();
+    public abstract void setCurrentHealth(int a);
+    public abstract void damageByAmount(int a);
+    public abstract void refreshHealth();
 }

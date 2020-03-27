@@ -52,6 +52,7 @@ public class Game {
 
     public void nextTurn(){
         Game.turn += 1;
+        
         for (List<Tile> list : gameGrid) {
             for (Tile tile : list) {
                 for (Entity entity : tile.getEntities()) {
@@ -62,6 +63,7 @@ public class Game {
     }
 
     public static void main(String[] args) {
+        Game game = new Game();
         
     }
 }

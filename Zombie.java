@@ -1,32 +1,30 @@
-public abstract class Zombie extends Entity implements Printable, Damageable{
+public abstract class Zombie extends Entity implements Damageable, Movable, Damaging{
+    // Zombie Variables
+    protected int attackDamage;
+    protected final int spawnedTurn;
+
+    // Damageable Variables
     protected int maxHealth;
     protected int currentHealth;
-    protected int spawnedTurn;
-    protected int movementTime;
-    protected int damage;
+
+    // Movable Variables
+    protected int direction; // (Kanan ke Kiri)
 
     public Zombie(
-        int maxHealth,
         int spawnedTurn,
-        int movementTime,
+        int maxHealth,
+        int direction,
         int representation,
-        int damage,
-        String name
+        String name,
+        int actionTime,
+        int attackDamage,
+        Tile tile
     ){
-        super(representation);
+        super(representation, name, actionTime, tile);
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
         this.spawnedTurn = spawnedTurn;
-        this.movementTime = movementTime;
-        this.damage = damage;
-        this.name = name;
-    }
-
-    /**
-     * @return the damage
-     */
-    public int getDamage() {
-        return damage;
+        this.direction = direction;
     }
 
     /**
@@ -37,6 +35,13 @@ public abstract class Zombie extends Entity implements Printable, Damageable{
     }
 
     /**
+     * @return the direction
+     */
+    public int getDirection() {
+        return direction;
+    }
+
+    /**
      * @return the maxHealth
      */
     public int getMaxHealth() {
@@ -44,24 +49,10 @@ public abstract class Zombie extends Entity implements Printable, Damageable{
     }
 
     /**
-     * @return the movementTime
-     */
-    public int getMovementTime() {
-        return movementTime;
-    }
-
-    /**
      * @return the spawnedTurn
      */
     public int getSpawnedTurn() {
         return spawnedTurn;
-    }
-
-    /**
-     * @param damage the damage to set
-     */
-    public void setDamage(int damage) {
-        this.damage = damage;
     }
 
     /**
@@ -79,29 +70,31 @@ public abstract class Zombie extends Entity implements Printable, Damageable{
     }
 
     /**
-     * @param movementTime the movementTime to set
+     * @param direction the direction to set
      */
-    public void setMovementTime(int movementTime) {
-        this.movementTime = movementTime;
+    public void setDirection(int direction) {
+        this.direction = direction;
     }
 
-    /**
-     * @param spawnedTurn the spawnedTurn to set
-     */
-    public void setSpawnedTurn(int spawnedTurn) {
-        this.spawnedTurn = spawnedTurn;
+    public void refreshHealth() {
+        this.setCurrentHealth(this.getMaxHealth());
     }
 
-    public void damageByAmount(int amount) {
-        this.currentHealth -= amount;
+    public int getAttackDamage() {
+        return attackDamage;
+    }
+
+    public void damageByAmount(int a) {
+        this.setCurrentHealth(this.getCurrentHealth() - a);
+        
     }
 
     public void print(){
-        System.out.println("Zombie Name: " + this.getName() + " " + this.getRepresentation());
         System.out.println("Zombie Stats:");
-        System.out.println("\tMax Health: " + this.getMaxHealth());
-        System.out.println("\tCurrent Health: " + this.getCurrentHealth());
-        System.out.println("\tMovement Time: " + this.getMovementTime());
-        System.out.println("\tSpawned At Turn: " + this.getSpawnedTurn());
+        System.out.println("Max Health: " + this.getMaxHealth());
+        System.out.println("Current Health: " + this.getCurrentHealth());
+        System.out.println("Direction " + this.getDirection());
+        System.out.println("Spawned on turn: " + this.getSpawnedTurn());
+        System.out.println("");
     }
 }
