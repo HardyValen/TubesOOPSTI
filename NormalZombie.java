@@ -7,7 +7,7 @@ public class NormalZombie extends Zombie{
             -1,             // Direction
             0x1f636,        // 😶
             "Normal Zombie",// Entity Name
-            5,              // Action Time
+            9,              // Action Time
             4,              // Attack Damage
             tile
         );

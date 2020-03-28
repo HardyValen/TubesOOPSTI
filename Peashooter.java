@@ -1,4 +1,4 @@
-public class Peashooter extends Plant{
+public class Peashooter extends Plant implements Shootable{
 
     public Peashooter(int plantedTurn, Tile tile){
         super(
@@ -14,14 +14,17 @@ public class Peashooter extends Plant{
     }
 
     public void turnPass() {
-        if(this.actionCD == 0){
+        if(actionCD == 0){
             this.shoot();
+            this.refreshActionCD();
+        } else {
+            this.decreaseActionCD();
         }
-        super.turnPass();
+        
     }
 
     public void shoot(){
-        this.tile.getEntities().add(new PeaProjectile(Game.turn, 1, this.getTile()));
+        tile.addProjectile(new PeaProjectile(Game.turn, tile));
     }
 
     public void print(){
@@ -30,13 +33,5 @@ public class Peashooter extends Plant{
         System.out.println("Early Game Plant");
         System.out.println("Not effective for clearing Horde of Zombies");
         System.out.println("");
-    }
-
-    
-
-    public static void main(String[] args) {
-        Tile tile = new Tile();
-        Peashooter pea = new Peashooter(1, tile);
-        
     }
 }

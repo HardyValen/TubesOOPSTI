@@ -85,11 +85,11 @@ public abstract class Zombie extends Entity implements Damageable, Movable, Dama
     }
 
     public void damageByAmount(int a) {
-        this.setCurrentHealth(this.getCurrentHealth() - a);
-        
+        this.setCurrentHealth(this.getCurrentHealth() - a);   
     }
 
     public void print(){
+        super.print();
         System.out.println("Zombie Stats:");
         System.out.println("Max Health: " + this.getMaxHealth());
         System.out.println("Current Health: " + this.getCurrentHealth());

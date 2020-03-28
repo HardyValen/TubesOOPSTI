@@ -1,22 +1,21 @@
-import java.util.ArrayList;
-import java.util.List;
-
 class Test{
-    public static void main(String[] args) {
-        Tile tile = new Tile();
-        tile.addEntity(new BucketheadZombie(1, tile));
-        tile.addEntity(new BucketheadZombie(1, tile));
-        tile.addEntity(new PeaProjectile(1, 1, tile));
-        tile.addEntity(new PeaProjectile(2, 1, tile));
-        tile.addEntity(new PeaProjectile(3, 1, tile));
+    public static void main(String[] args) throws InterruptedException {
+        Row row = new Row(10);
+        Zombie zombie = new NormalZombie(0, row.getTile(9));
         
-        Tile tile2 = new Tile();
-        tile2 = tile;
-        tile2.removeEntity(1);
-        for (Entity entity : tile2.getEntities()) {
-            System.out.println(entity.getName());
-        }
+        row.getTile(0).addPlant(new Peashooter(0, row.getTile(0)));
+        row.getTile(9).addZombie(zombie);
 
-        tile.setEntities(tile2.entities);
+        while(true){
+            if (Game.turn == 10){
+                row.getTile(1).addPlant(new Peashooter(Game.turn, row.getTile(1)));
+            }
+
+            row.print();
+            System.out.println("\t\tTurn: " + Game.turn + " \tZombie HP: " + zombie.getCurrentHealth());
+            Thread.sleep(200);
+            row.turnPass();
+            Game.turn++;
+        }
     }
 }

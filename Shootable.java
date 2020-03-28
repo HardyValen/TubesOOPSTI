@@ -1,3 +1,1 @@
-public interface Shootable {
-    public abstract void shoot();
-}
+public interface Shootable {}
