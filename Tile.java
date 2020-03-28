@@ -5,8 +5,13 @@ public class Tile{
     protected Plant plant;
     protected List<Zombie> zombies = new ArrayList<Zombie>();
     protected List<Projectile> projectiles = new ArrayList<Projectile>();
+    protected Row row;
 
     public Tile(){}
+
+    public Tile(Row row){
+        this.row = row;
+    }
 
     public Plant getPlant() {
         return plant;

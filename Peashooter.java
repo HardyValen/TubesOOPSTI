@@ -1,5 +1,4 @@
 public class Peashooter extends Plant implements Shootable{
-
     public Peashooter(int plantedTurn, Tile tile){
         super(
             10,             // maxHealth
@@ -15,12 +14,13 @@ public class Peashooter extends Plant implements Shootable{
 
     public void turnPass() {
         if(actionCD == 0){
-            this.shoot();
+            if (tile.row.hasZombie()) {
+                this.shoot();
+            }
             this.refreshActionCD();
         } else {
             this.decreaseActionCD();
         }
-        
     }
 
     public void shoot(){

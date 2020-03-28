@@ -1,12 +1,12 @@
 import java.util.List;
 import java.util.ArrayList;
 
-public class Row {
+public class Row{
     protected List<Tile> tiles = new ArrayList<Tile>();
 
     public Row(int size){
         for(int j = 0; j < size; j++){
-            tiles.add(new Tile());
+            tiles.add(new Tile(this));
         }
     }
 
@@ -106,6 +106,19 @@ public class Row {
             }
             tile.processProjectiles();
         }
+    }
+
+    public boolean hasZombie(){
+        boolean flag = false;
+        int i = 0;
+        while (!flag && i < tiles.size()){
+            if (tiles.get(i).getZombies().size() > 0) {
+                flag = true;
+            } else {
+                i++;
+            }
+        }
+        return flag;
     }
 
     public void print(){
