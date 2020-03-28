@@ -1,9 +1,9 @@
 public class PeaProjectile extends Projectile{
-    public PeaProjectile(int turnShotFromPlant, int direction, Tile tile){
+    public PeaProjectile(int turnShotFromPlant, Tile tile){
         super(
             4,                  // Standard Damage
             turnShotFromPlant,  // Turn Shot from Plant
-            direction,
+            1,
             0x2022,             // •
             "Pea Projectile",   // Projectile Name
             1,                   // Action Time (Move Time)
@@ -18,6 +18,6 @@ public class PeaProjectile extends Projectile{
     }
 
     public void turnPass() {
-        super.turnPass();
+        this.decreaseActionCD();
     }
 }

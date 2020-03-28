@@ -69,7 +69,7 @@ public class Tile{
             
             this.removeFirstProjectile();
 
-            if (this.zombieCheck(i)) {
+            if (this.zombieCheckHP(i)) {
                 i++;
             }
         }
@@ -95,10 +95,52 @@ public class Tile{
         }
     }
 
-    public boolean zombieCheck(int i){
+    public void actionCheck(){
+        if (plant != null) {
+            plant.actionCheck();
+        }
+        
+        if (projectiles.size() > 0) {
+            for (Projectile projectile : projectiles) {
+                projectile.actionCheck();
+            }
+        }
+
+        if (zombies.size() > 0){
+            for (Zombie zombie : zombies) {
+                zombie.actionCheck();
+            }
+        }
+    }
+
+    public boolean zombieCheckHP(int i){
         if (i < zombies.size()) {
-            if (zombies.get(i).getCurrentHealth() < 0) {
+            if (zombies.get(i).getCurrentHealth() <= 0) {
                 zombies.remove(i);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public boolean zombieCheckAction(int i){
+        if (i < zombies.size()) {
+            if (zombies.get(i).getActionCD() == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public boolean projectileCheckAction(int i){
+        if (i < projectiles.size()) {
+            if (projectiles.get(i).getActionCD() == 0) {
                 return true;
             } else {
                 return false;

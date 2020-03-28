@@ -71,16 +71,18 @@ public abstract class Entity{
         this.setActionCD(this.getActionTime());
     }
 
+    public void actionCheck(){
+        if (this.actionCD <= 0) {
+            this.refreshActionCD();
+        }
+    }
+
     public void decreaseActionCD(){
         this.setActionCD(this.getActionCD() - 1);
     }
 
     public void turnPass(){
-        if (this.actionCD == 0) {
-            this.refreshActionCD();
-        } else {
-            this.decreaseActionCD();
-        }
+        this.decreaseActionCD();
     }
 
     public void print(){

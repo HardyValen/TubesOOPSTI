@@ -1,16 +1,21 @@
-import java.util.ArrayList;
-import java.util.List;
-
 class Test{
-    public static void main(String[] args) {
-        Tile tile = new Tile();
-        tile.addZombie(new BucketheadZombie(1, tile));
-        tile.addPlant(new Peashooter(1, tile));
+    public static void main(String[] args) throws InterruptedException {
+        Row row = new Row(10);
+        Zombie zombie = new NormalZombie(0, row.getTile(9));
+        
+        row.getTile(0).addPlant(new Peashooter(0, row.getTile(0)));
+        row.getTile(9).addZombie(zombie);
 
-        tile.printDetail();
-        tile.turnPass();
-        tile.turnPass();
-        tile.turnPass();
-        tile.printDetail();
+        while(true){
+            if (Game.turn == 10){
+                row.getTile(1).addPlant(new Peashooter(Game.turn, row.getTile(1)));
+            }
+
+            row.print();
+            System.out.println("\t\tTurn: " + Game.turn + " \tZombie HP: " + zombie.getCurrentHealth());
+            Thread.sleep(200);
+            row.turnPass();
+            Game.turn++;
+        }
     }
 }
