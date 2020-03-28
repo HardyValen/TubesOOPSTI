@@ -67,11 +67,10 @@ public class Tile{
 
     public void processProjectiles(){
         int i = 0;
-        while (zombies.size() > 0 && projectiles.size() > 0) {
+        while (zombies.size() > 0 && projectiles.size() > 0 && i < zombies.size()){
             int zombieHP = this.zombies.get(i).getCurrentHealth();
             int projectileDamage = this.projectiles.get(0).getAttackDamage();
             this.zombies.get(i).setCurrentHealth(zombieHP - projectileDamage);
-            
             this.removeFirstProjectile();
 
             if (this.zombieCheckHP(i)) {
@@ -82,6 +81,7 @@ public class Tile{
 
     public void turnPass(){
         this.processProjectiles();
+        this.plantCheckHP();
 
         if (plant != null) {
             plant.turnPass();
@@ -130,6 +130,14 @@ public class Tile{
             return false;
         }
     }
+
+    public void plantCheckHP(){
+        if (plant != null) {
+            if (plant.getCurrentHealth() <= 0) {
+                plant = null;
+            }
+        }
+    }      
 
     public boolean zombieCheckAction(int i){
         if (i < zombies.size()) {

@@ -34,7 +34,9 @@ public class Sunflower extends Plant implements Generable{
     public void turnPass() {
         if (this.getActionCD() == 0) {
             Game.spPoints += this.getGenerateSPValue();
+            this.refreshActionCD();
+        } else {
+            this.decreaseActionCD();
         }
-        super.turnPass();
     }
 }
