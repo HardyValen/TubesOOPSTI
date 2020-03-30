@@ -62,16 +62,15 @@ public class Game {
             tileTemp.addZombie(new BucketheadZombie(Game.turn, tileTemp));
         }
 
-        if (gameCheck(grid)) {
-            loop = false;
-            System.out.println("Game Over");
+        if (Game.gameCheck(grid)) {
+            Game.loop = false;
         } else {
             Main.clearConsole();
             Game.turn++;
             grid.turnPass();
             this.print();
-        }    
-    }
+        }
+    }    
 
     public static boolean gameCheck(Grid grid){
         List<Tile> firstTiles = new ArrayList<Tile>();
@@ -150,19 +149,25 @@ public class Game {
         Main.showGameHelp();
         System.out.println("");
 
-        while(Game.loop){
+        while(Game.loop == true){
             Main.prompt();
             String command = input.next();
-
+            
             if(command.equalsIgnoreCase("skip") || command.equalsIgnoreCase("s") || command.equalsIgnoreCase("1")){
                 System.out.print("How Many Turns? ");
                 int skipTurns = input.nextInt();
                 if (skipTurns < 1) {
                     skipTurns = 1;
                 }
-                while(skipTurns > 0){
+                while(skipTurns > 0 && !Game.gameCheck(grid)){
                     this.turnPass();
                     skipTurns--;
+                }
+
+                if (Game.gameCheck(grid)) {
+                    Game.loop = false;
+                    Main.gameState = "MainScreen";
+                    System.out.println("Game Over, Exitting the game");
                 }
             } 
             
@@ -256,7 +261,7 @@ public class Game {
             }
             
             else if (command.equalsIgnoreCase("exit") || command.equalsIgnoreCase("e") || command.equalsIgnoreCase("6")) {
-                Game.loop = false;
+                    Game.loop = false;
                     Main.clearConsole();
                     System.out.println("Exitting the game");
                     Main.gameState = "MainScreen";
