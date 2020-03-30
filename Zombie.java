@@ -23,6 +23,7 @@ public abstract class Zombie extends Entity implements Damageable, Movable, Dama
         super(representation, name, actionTime, tile);
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
+        this.attackDamage = attackDamage;
         this.spawnedTurn = spawnedTurn;
         this.direction = direction;
     }
@@ -86,6 +87,32 @@ public abstract class Zombie extends Entity implements Damageable, Movable, Dama
 
     public void damageByAmount(int a) {
         this.setCurrentHealth(this.getCurrentHealth() - a);   
+    }
+
+    public void turnPass(){
+        int thisTileIndex = tile.row.tiles.indexOf(tile);
+        int nextTileIndex = thisTileIndex + direction;
+        Plant plantTemp = tile.row.tiles.get(thisTileIndex).plant;
+        
+        if (plantTemp != null){
+            plantTemp.damageByAmount(this.getAttackDamage());
+        } else {
+            if (nextTileIndex > 0 && nextTileIndex < tile.row.tiles.size()){
+                Plant plantNext = tile.row.tiles.get(nextTileIndex).plant;
+                if (plantNext != null) {
+                    plantNext.damageByAmount(this.getAttackDamage());
+                } else {
+                    super.turnPass();    
+                }
+            } else {
+                super.turnPass();
+            }
+        }
+        // } else if (plantNext != null) {
+        //     plantNext.damageByAmount(this.getAttackDamage());
+        // } else {
+        //     super.turnPass();
+        // }
     }
 
     public void print(){

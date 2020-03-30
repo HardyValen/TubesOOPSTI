@@ -1,13 +1,22 @@
 import java.util.List;
 import java.util.ArrayList;
 
-public class Row {
+public class Row{
     protected List<Tile> tiles = new ArrayList<Tile>();
+    protected Grid grid;
 
     public Row(int size){
         for(int j = 0; j < size; j++){
-            tiles.add(new Tile());
+            tiles.add(new Tile(this));
         }
+    }
+
+    public Row(int size, Grid grid){
+        for(int j = 0; j < size; j++){
+            tiles.add(new Tile(this));
+        }
+        
+        this.grid = grid;
     }
 
     /**
@@ -108,6 +117,27 @@ public class Row {
         }
     }
 
+    public boolean hasZombie(){
+        boolean flag = false;
+        int i = 0;
+        while (!flag && i < tiles.size()){
+            if (tiles.get(i).getZombies().size() > 0) {
+                flag = true;
+            } else {
+                i++;
+            }
+        }
+        return flag;
+    }
+
+    public int zombieQuantity(){
+        int i = 0;
+        for (Tile tile : tiles) {
+            i += tile.getZombies().size();
+        }
+        return i;
+    }
+
     public void print(){
         for (Tile tile : tiles) {
             System.out.print("|");
@@ -116,6 +146,5 @@ public class Row {
                 System.out.print("|");
             }
         }
-        // System.out.println("");
     }
 }

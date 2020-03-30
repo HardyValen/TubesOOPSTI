@@ -2,21 +2,45 @@
 import java.util.Scanner;
 
 public class Main{
-    public static boolean loopflag = true;
     public static String gameState = "MainScreen";
-    public static Scanner input = new Scanner(System.in);
+    public static void prompt(){
+        System.out.print("Player@PlantsVsZombies:" + gameState + "$ ");
+    }
     public static void main(String[] args) throws InterruptedException{
+        boolean loopflag = true;
+        Scanner input = new Scanner(System.in);
+        Game game;
+
         clearConsole();
 
         System.out.println("======================");
         System.out.println("Plants vs Zombies Game");
         System.out.println("======================");
-        System.out.print("\n\n");
-        showMainScreenHelp();
+        System.out.print("\n");
+        Main.showMainScreenHelp();
 
         while(loopflag){
-            inputCommand();
-            Thread.sleep(1000);
+            Main.prompt();
+            String commandTemp = input.next();
+
+            // 1. Play the Game
+            if (commandTemp.equalsIgnoreCase("g") || commandTemp.equalsIgnoreCase("game") || commandTemp.equalsIgnoreCase("1")){
+                gameState = "Game";
+                game = new Game();
+                game.playGame();
+            } 
+            // 2. Show Help Message
+            else if (commandTemp.equalsIgnoreCase("h") || commandTemp.equalsIgnoreCase("help") || commandTemp.equalsIgnoreCase("2")) {
+                showMainScreenHelp();
+            }
+            // 3. Exit Game
+            else if (commandTemp.equalsIgnoreCase("e") || commandTemp.equalsIgnoreCase("exit") || commandTemp.equalsIgnoreCase("3")){
+                System.out.println("Bye.");
+                loopflag = false;
+            } else {
+                wrongInputCommand();
+            }
+            Thread.sleep(300);
         }
     }
 
@@ -41,28 +65,14 @@ public class Main{
         System.out.println("3. [Exit / E / 3] = Exit The Game\n");
     }
 
-    public static void inputCommand(){
-        System.out.print("Player@PlantsVsZombies:" + gameState + "$ ");
-        String commandTemp = input.next();
-
-        if (gameState.equals("MainScreen")) {
-            // 1. Play the Game
-            if (commandTemp.equalsIgnoreCase("g") || commandTemp.equalsIgnoreCase("game") || commandTemp.equalsIgnoreCase("1")){
-                gameState = "GameStage1";
-
-            } 
-            // 2. Show Help Message
-            else if (commandTemp.equalsIgnoreCase("h") || commandTemp.equalsIgnoreCase("help") || commandTemp.equalsIgnoreCase("2")) {
-                showMainScreenHelp();
-            }
-            // 3. Exit Game
-            else if (commandTemp.equalsIgnoreCase("e") || commandTemp.equalsIgnoreCase("exit") || commandTemp.equalsIgnoreCase("3")){
-                System.out.println("Bye.");
-                loopflag = false;
-            } else {
-                wrongInputCommand();
-            }
-        }
+    public static void showGameHelp(){
+        System.out.println("Game Instructions:");
+        System.out.println("1. Skip = Skip turns");
+        System.out.println("2. Plant = Set plant in a tile");
+        System.out.println("3. Remove = Remove a plant in a tile");
+        System.out.println("4. Check = Check a tile");
+        System.out.println("5. Help = Show this message");
+        System.out.println("6. Exit = Exit the Game Stage");
     }
 
     public static void wrongInputCommand(){
