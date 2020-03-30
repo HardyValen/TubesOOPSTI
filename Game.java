@@ -234,8 +234,8 @@ public class Game {
             else if (command.equalsIgnoreCase("remove") || command.equalsIgnoreCase("r") || command.equalsIgnoreCase("3")){
                 Tile selectedTile = selectTile();
                 if (selectedTile.plant != null){
-                    this.clear();
                     selectedTile.plant = null;
+                    this.clear();
                     System.out.println("Plant Cleared Successfully");
                 } else {
                     this.clear();
