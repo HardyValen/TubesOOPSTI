@@ -1,4 +1,5 @@
 public class Peashooter extends Plant implements Shootable{
+    public static int plantRechargeCD = 0;
     public Peashooter(int plantedTurn, Tile tile){
         super(
             10,             // maxHealth
@@ -25,6 +26,14 @@ public class Peashooter extends Plant implements Shootable{
 
     public void shoot(){
         tile.addProjectile(new PeaProjectile(Game.turn, tile));
+    }
+
+    public void setPlantRechargeCD(int plantRechargeCD) {
+        Peashooter.plantRechargeCD = plantRechargeCD;
+    }
+
+    public void refreshPlantRechargeCD(){
+        setPlantRechargeCD(getPlantRechargeTime());
     }
 
     public void print(){

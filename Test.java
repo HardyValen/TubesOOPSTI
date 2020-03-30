@@ -1,61 +1,75 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 class Test{
-    public static void main(String[] args) throws InterruptedException {
-        Sunflower sunflower = new Sunflower(0, new Tile());
-        while(true){
-            System.out.println("SP Points: " + Game.spPoints);
-            sunflower.turnPass();
-            Thread.sleep(100);
-            Main.clearConsole();
+    public static boolean gameCheck(Grid grid){
+        List<Tile> firstTiles = new ArrayList<Tile>();
+        List<Integer> zombieCD = new ArrayList<Integer>();
+        for (Row row : grid.rows) {
+            firstTiles.add(row.getFirstTile());
         }
-        // Row row = new Row(15);
-        // Zombie zombie = new NormalZombie(0, row.getTile(row.tiles.size() - 1));
-        // Peashooter pea = new Peashooter(0, row.getTile(0));
-        // row.getTile(0).addPlant(pea);
 
-        // boolean loop = true;
-        // while(loop){
-        //     if (Game.turn % 20 == 5){
-        //         boolean flag = false;
-        //         int i = 0;
+        for(Tile tile : firstTiles){
+            for (Zombie zombie : tile.getZombies()) {
+                zombieCD.add(Integer.valueOf(zombie.getActionCD()));
+            }
+        }
+        
+        return zombieCD.contains(Integer.valueOf(0));
+    }
+    public static void main(String[] args) throws InterruptedException {
+        Grid grid = new Grid(5, 9);
+        Random rand = new Random();
+        boolean loop = true;
 
-        //         while (!flag && i < row.tiles.size()){
-        //             if (row.getTile(i).plant == null) {
-        //                 pea = new Peashooter(Game.turn, row.getTile(i));
-        //                 row.getTile(i).addPlant(pea);
-        //                 flag = true;
-        //             } else {
-        //                 i++;
-        //             }
-        //         }
-        //     }
+        while(loop){
+            if (Game.turn % 35 == 30) {
+                Tile tileTemp = grid.getRow(rand.nextInt(5)).getLastTile();
+                switch (rand.nextInt(2)){
+                    case 0:
+                        tileTemp.addZombie(new ConeheadZombie(Game.turn, tileTemp));
+                        break;
+                    case 1:
+                        tileTemp.addZombie(new BucketheadZombie(Game.turn, tileTemp));
+                        break;
+                    default:
+                        tileTemp.addZombie(new NormalZombie(Game.turn, tileTemp));
+                        break;
+                }
+            }
 
-        //     if (Game.turn % 104 == 60){
-        //         zombie = new BucketheadZombie(0, row.getTile(row.tiles.size() - 1));
-        //         row.getTile(row.tiles.size() - 1).addZombie(zombie);
-        //     }
+            if (Game.turn % 12 == 10) {
+                Row rowTemp = grid.getRow(rand.nextInt(5));
+                boolean flag = false;
+                int i = 0;
+                Tile tileTemp = rowTemp.getFirstTile();
 
-        //     if (Game.turn % 30 == 10){
-        //         zombie = new NormalZombie(0, row.getTile(row.tiles.size() - 1));
-        //         row.getTile(row.tiles.size() - 1).addZombie(zombie);
-        //     }
+                while (!flag && i < rowTemp.tiles.size()) {
+                    if (tileTemp.getPlant() == null){
+                        tileTemp.addPlant(new Peashooter(Game.turn, tileTemp));
+                        flag = true;
+                    } else {
+                        i++;
+                        if (i < rowTemp.tiles.size()) {
+                            tileTemp = rowTemp.getTile(i);
+                        }
+                    }
+                }
+            }
 
-        //     if (Game.turn % 38 == 25){
-        //         zombie = new ConeheadZombie(0, row.getTile(row.tiles.size() - 1));
-        //         row.getTile(row.tiles.size() - 1).addZombie(zombie);
-        //     }
+            Thread.sleep(50);
             
-        //     row.print();
-        //     System.out.println("\t\tTurn: " + Game.turn);
-        //     Thread.sleep(100);
-        //     row.turnPass();
-        //     Game.turn++;
-        //     Main.clearConsole();
-        //     if (row.getTile(0).zombies.size() > 0){
-        //         if (row.getTile(0).zombies.get(0).getActionCD() <= 1){
-        //             loop = false;
-        //             System.out.println("You Lose!");
-        //         }
-        //     }
-        // }
+            if (gameCheck(grid)) {
+                loop = false;
+                System.out.println("Game Over");
+            } else {
+                Main.clearConsole();
+                Game.turn++;
+                grid.turnPass();
+                grid.print();
+            }         
+            
+        }
     }
 }

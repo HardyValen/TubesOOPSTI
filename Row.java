@@ -3,11 +3,20 @@ import java.util.ArrayList;
 
 public class Row{
     protected List<Tile> tiles = new ArrayList<Tile>();
+    protected Grid grid;
 
     public Row(int size){
         for(int j = 0; j < size; j++){
             tiles.add(new Tile(this));
         }
+    }
+
+    public Row(int size, Grid grid){
+        for(int j = 0; j < size; j++){
+            tiles.add(new Tile(this));
+        }
+        
+        this.grid = grid;
     }
 
     /**
@@ -121,6 +130,14 @@ public class Row{
         return flag;
     }
 
+    public int zombieQuantity(){
+        int i = 0;
+        for (Tile tile : tiles) {
+            i += tile.getZombies().size();
+        }
+        return i;
+    }
+
     public void print(){
         for (Tile tile : tiles) {
             System.out.print("|");
@@ -129,6 +146,5 @@ public class Row{
                 System.out.print("|");
             }
         }
-        // System.out.println("");
     }
 }

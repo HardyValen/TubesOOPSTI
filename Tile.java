@@ -27,7 +27,7 @@ public class Tile{
 
     public void addPlant(Plant plant) {
         if (this.plant != null) {
-            System.out.println("You cannot plant " + plant.getName() + "Because this tile already have a " + this.plant.getName());
+            System.out.println("You cannot plant " + plant.getName() + " because this tile already have a " + this.plant.getName());
         } else {
             this.plant = plant;
         }

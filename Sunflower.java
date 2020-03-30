@@ -1,5 +1,6 @@
 public class Sunflower extends Plant implements Generable{
     protected int generateSPValue;
+    public static int plantRechargeCD = 0;
 
     public Sunflower(int plantedTurn, Tile tile){
         super(
@@ -9,7 +10,7 @@ public class Sunflower extends Plant implements Generable{
             10,             // Plant Recharge
             0x1f33b,         // representation 🌻
             "Sunflower",    // name
-            14,             // Action Time
+            12,             // Action Time
             tile            // Tile
         );
 
@@ -23,10 +24,19 @@ public class Sunflower extends Plant implements Generable{
         return generateSPValue;
     }
 
+    public void setPlantRechargeCD(int plantRechargeCD) {
+        Sunflower.plantRechargeCD = plantRechargeCD;
+    }
+
+    public void refreshPlantRechargeCD(){
+        setPlantRechargeCD(getPlantRechargeTime());
+    }
+
     public void print(){
         super.print();
         System.out.println("Sunflower Specific Stats:");
         System.out.println("Generate SP Value: " + this.getGenerateSPValue());
+        System.out.println("Sunflower Recharge Cooldown: " + Sunflower.plantRechargeCD);
         System.out.println("");
         System.out.println("Sunflower is your SP Generator\n");
     }
