@@ -239,7 +239,7 @@ public class Game {
                     System.out.println("Plant Cleared Successfully");
                 } else {
                     this.clear();
-                    System.out.println("There was no plant");
+                    System.out.println("There was no plant in the selected tile");
                 } 
             }
             
