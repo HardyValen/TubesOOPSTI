@@ -6,7 +6,7 @@ public abstract class Entity{
     protected Tile tile;
 
     public Entity(
-        int representation, 
+        String representation, 
         String name,
         int actionTime,
         Tile tile

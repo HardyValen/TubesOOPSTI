@@ -13,7 +13,7 @@ public abstract class Plant extends Entity implements Damageable{
         int plantedTurn,
         int spCost,
         int plantRechargeTime,
-        int representation,
+        String representation,
         String name,
         int actionTime,
         Tile tile

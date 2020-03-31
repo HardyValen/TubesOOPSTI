@@ -11,7 +11,7 @@ public abstract class Projectile extends Entity implements Movable, Damaging{
         int attackDamage,
         int turnShotFromPlant,
         int direction,
-        int representation,
+        String representation,
         String name,
         int actionTime,
         Tile tile,

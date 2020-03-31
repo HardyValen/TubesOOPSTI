@@ -14,7 +14,7 @@ public abstract class Zombie extends Entity implements Damageable, Movable, Dama
         int spawnedTurn,
         int maxHealth,
         int direction,
-        int representation,
+        String representation,
         String name,
         int actionTime,
         int attackDamage,
