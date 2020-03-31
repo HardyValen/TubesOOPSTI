@@ -65,7 +65,7 @@ public class Game {
         if (Game.turn % 200 == 0 && Game.turn > 200){
             Random rand = new Random();
             Tile tileTemp = grid.getRow(rand.nextInt(5)).getLastTile();
-            tileTemp.addZombie(new BucketheadZombie(Game.turn, tileTemp));
+            tileTemp.addZombie(new ArmedZombie(Game.turn, tileTemp));
         }
 
         if (Game.turn % 250 == 0 && Game.turn > 250){
