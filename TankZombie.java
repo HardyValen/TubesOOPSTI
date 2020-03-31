@@ -7,7 +7,7 @@
             -1,             // Direction
             0x1f9df,        // 🧟‍♂️
             "Tank Zombie",// Entity Name
-            9,              // Action Time
+            6,              // Action Time
             8,              // Attack Damage
             tile
         );

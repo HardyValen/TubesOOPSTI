@@ -61,6 +61,26 @@ public class Game {
             Tile tileTemp = grid.getRow(rand.nextInt(5)).getLastTile();
             tileTemp.addZombie(new BucketheadZombie(Game.turn, tileTemp));
         }
+      
+        if (Game.turn % 200 == 0 && Game.turn > 200){
+            Random rand = new Random();
+            Tile tileTemp = grid.getRow(rand.nextInt(5)).getLastTile();
+            tileTemp.addZombie(new BucketheadZombie(Game.turn, tileTemp));
+        }
+
+        if (Game.turn % 250 == 0 && Game.turn > 250){
+            Random rand = new Random();
+            Tile tileTemp = grid.getRow(rand.nextInt(5)).getLastTile();
+            tileTemp.addZombie(new TankZombie(Game.turn, tileTemp));
+        }
+
+        if (Game.turn % 300 == 0 && Game.turn > 300){
+            Random rand = new Random();
+            Tile tileTemp = grid.getRow(rand.nextInt(5)).getLastTile();
+            tileTemp.addZombie(new ReaperZombie(Game.turn, tileTemp));
+        }
+
+
 
         if (Game.gameCheck(grid)) {
             Game.loop = false;
