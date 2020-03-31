@@ -5,7 +5,7 @@ public class BucketheadZombie extends Zombie{
             spawnedTurn,    // Turn Spawned
             120,             // Max Health
             -1,             // Direction
-            0x1f602,        // 😂
+            "B",            // Representation
             "Buckethead Zombie",// Entity Name
             9,              // Action Time
             4,              // Attack Damage

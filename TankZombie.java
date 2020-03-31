@@ -5,7 +5,7 @@
             spawnedTurn,    // Turn Spawned
             350,             // Max Health
             -1,             // Direction
-            0x1f9df,        // 🧟‍♂️
+            "T",        // Representation
             "Tank Zombie",// Entity Name
             6,              // Action Time
             8,              // Attack Damage

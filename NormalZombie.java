@@ -5,7 +5,7 @@ public class NormalZombie extends Zombie{
             spawnedTurn,    // Turn Spawned
             40,             // Max Health
             -1,             // Direction
-            0x1f636,        // 😶
+            "Z",            // Representation
             "Normal Zombie",// Entity Name
             9,              // Action Time
             4,              // Attack Damage

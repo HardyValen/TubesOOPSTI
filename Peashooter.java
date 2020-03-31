@@ -6,7 +6,7 @@ public class Peashooter extends Plant implements Shootable{
             plantedTurn,    // plantedTurn
             100,            // spCost
             10,             // Turns to be Used Again
-            0x1f331,        // representation 🌱
+            "P",        // representation 
             "Peashooter",   // Plant name
             3,               // Action Time (Shoot Time)
             tile

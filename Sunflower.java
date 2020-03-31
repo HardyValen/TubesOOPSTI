@@ -8,7 +8,7 @@ public class Sunflower extends Plant implements Generable{
             plantedTurn,    // plantedTurn
             50,             // spCost
             10,             // Plant Recharge
-            0x1f33b,         // representation 🌻
+            "S",         // representation
             "Sunflower",    // name
             12,             // Action Time
             tile            // Tile

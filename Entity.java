@@ -11,7 +11,7 @@ public abstract class Entity{
         int actionTime,
         Tile tile
     ){ 
-        this.representation = new StringBuilder().appendCodePoint(representation).toString();
+        this.representation = representation;
         this.actionTime = actionTime;
         this.actionCD = actionTime;
         this.name = name;

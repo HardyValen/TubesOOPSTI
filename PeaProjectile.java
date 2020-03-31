@@ -4,7 +4,7 @@ public class PeaProjectile extends Projectile{
             4,                  // Standard Damage
             turnShotFromPlant,  // Turn Shot from Plant
             1,
-            0x2022,             // •
+            "-",             // Representation
             "Pea Projectile",   // Projectile Name
             1,                   // Action Time (Move Time)
             tile,

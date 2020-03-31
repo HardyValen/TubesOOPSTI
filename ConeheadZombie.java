@@ -5,7 +5,7 @@ public class ConeheadZombie extends Zombie{
             spawnedTurn,    // Turn Spawned
             80,             // Max Health
             -1,             // Direction
-            0x1f606,        // 😆
+            "C",             // Representation
             "Conehead Zombie",// Entity Name
             9,              // Action Time
             4,              // Attack Damage

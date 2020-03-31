@@ -7,7 +7,7 @@ public class Wallnut extends Plant{
             plantedTurn,    // plantedTurn
             50,             // spCost
             60,             // Plant Recharge
-            0x1f95c,         // representation 🥜
+            "W",         // representation
             "Wallnut",    // name
             60,             // Action Time
             tile            // Tile

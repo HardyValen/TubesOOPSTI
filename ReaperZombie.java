@@ -5,7 +5,7 @@
             spawnedTurn,    // Turn Spawned
             60,             // Max Health
             -1,             // Direction
-            0x1f480,        // 💀
+            "R",        // Representation
             "Reaper Zombie",// Entity Name
             9,              // Action Time
             1000,           // Attack Damage
