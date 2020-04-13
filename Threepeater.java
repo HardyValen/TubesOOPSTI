@@ -1,0 +1,46 @@
+public class public class Threepeater extends Plant implements Shootable{
+    public static int plantRechargeCD = 0;
+    public Threepeater(int plantedTurn, Tile tile){
+        super(
+            10,             // maxHealth
+            plantedTurn,    // plantedTurn
+            250,            // spCost
+            10,             // Turns to be Used Again
+            0x1f340,        // representation 🍀
+            "Threepeater",   // Plant name
+            3,               // Action Time (Shoot Time)
+            tile
+        );
+    }
+
+    public void turnPass() {
+        if(actionCD == 0){
+            if (tile.row.hasZombie()) {
+                this.shoot();
+            }
+            this.refreshActionCD();
+        } else {
+            this.decreaseActionCD();
+        }
+    }
+
+    public void shoot(){
+        tile.addProjectile(new PeaProjectile(Game.turn, tile));
+    }
+
+    public void setPlantRechargeCD(int plantRechargeCD) {
+        Peashooter.plantRechargeCD = plantRechargeCD;
+    }
+
+    public void refreshPlantRechargeCD(){
+        setPlantRechargeCD(getPlantRechargeTime());
+    }
+
+    public void print(){
+        super.print();
+        System.out.println("A Three-headed Peashooter, fires peas in three lanes.");
+        System.out.println("Intermediate Plant");
+        System.out.println("Quite effective for clearing Horde of Zombies");
+        System.out.println("");
+    }
+}
