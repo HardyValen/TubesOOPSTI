@@ -32,7 +32,10 @@ public class PotatoMine extends Plant implements Damaging{
                     i++;
                 }
             }
-            this.tile.removePlant();
+            this.tile.removePlant(); //???
+        else {
+        this.decreaseActionCD();
+        }
 
     public void setPlantRechargeCD(int plantRechargeCD) {
         Peashooter.plantRechargeCD = plantRechargeCD;
@@ -44,9 +47,9 @@ public class PotatoMine extends Plant implements Damaging{
 
     public void print(){
         super.print();
-        System.out.println("A Regular Peashooter");
+        System.out.println("A Potato Mine explodes on contact");
         System.out.println("Early Game Plant");
-        System.out.println("Not effective for clearing Horde of Zombies");
+        System.out.println("Effective for killing a zombie instantly");
         System.out.println("");
     }
 }
