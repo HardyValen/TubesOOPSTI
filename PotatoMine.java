@@ -20,10 +20,9 @@ public class PotatoMine extends Plant implements Damaging{
     }
 
     public void turnPass() {
-        if (actionCD == 0){
+        if ((actionCD == 0) && (tile.zombies.size() > 0)){
             //Meledak pas ada zombie di tile-nya
             //Bikin method khusus dia untuk meledak?
-            //Perlu arming time gak? Atau sekalinya ditanam bisa langsung meledak?
             int i = 0;
             while (tile.zombies.size() > 0 && i < tile.zombies.size())
             int zombieHP = tile.zombies.get(0).getCurrentHealth();
@@ -33,8 +32,11 @@ public class PotatoMine extends Plant implements Damaging{
                 }
             }
             this.tile.removePlant(); //???
-        else {
-        this.decreaseActionCD();
+        else if (actionCD == 0){
+            //ga ngapa2in
+        }
+        else{
+            this.decreaseActionCD();
         }
 
     public void setPlantRechargeCD(int plantRechargeCD) {
