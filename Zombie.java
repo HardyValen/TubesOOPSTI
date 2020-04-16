@@ -1,4 +1,4 @@
-public class Zombie extends Entity {
+public class Zombie extends Entity implements Damageable{
     protected int attackDamage;
     protected int maxHealth;
     protected int currentHealth;

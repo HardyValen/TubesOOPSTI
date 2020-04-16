@@ -72,10 +72,22 @@ public class Constants {
     public static final int ZOMBIES_MOVESPEED_FAST_X = -2;
     
     // Seed Packet Dimension
-    public static final int SEEDPACKET_X_START = 50 ;
+    public static final int SEEDPACKET_X_START = 50;
     public static final int SEEDPACKET_Y_START = 77;
     public static final int SEEDPACKET_HEIGHT = 50;
     public static final int SEEDPACKET_WIDTH = 100;
+
+    // Sun Dimension
+    public static final int ENVIRONMENT_SUN_ICON_X_START = 50;
+    public static final int ENVIRONMENT_SUN_ICON_Y_START = 30;
+    public static final int ENVIRONMENT_SUN_ICON_HEIGHT = 37;
+    public static final int ENVIRONMENT_SUN_ICON_WIDTH = 36;
+
+    public static final int ENVIRONMENT_SUN_LAWN_HEIGHT = 70;
+    public static final int ENVIRONMENT_SUN_LAWN_WIDTH = 70;
+
+    public static final int SUN_VALUE = 50;
+
 
     private Constants(){}
 }

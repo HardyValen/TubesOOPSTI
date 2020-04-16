@@ -1,14 +1,12 @@
 import java.awt.Image;
 
-public abstract class Entity {
+public abstract class Entity implements Coordinate{
     private Image image;        // Gantiin representation
     private boolean isDead;     
     protected int x;
     protected int y;
     protected int dx;
     protected int dy;
-
-    public abstract void move();
 
     public void setImage(Image image) {
         this.image = image;

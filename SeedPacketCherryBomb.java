@@ -1,4 +1,3 @@
-import javax.swing.JButton;
 
 public class SeedPacketCherryBomb extends SeedPacket {
 
@@ -14,7 +13,7 @@ public class SeedPacketCherryBomb extends SeedPacket {
 
         // Dimension
         int y = Constants.SEEDPACKET_Y_START + (Constants.SEEDPACKET_HEIGHT * position);
-        setBounds(Constants.SEEDPACKET_X_START, y, 100, 50);
+        setBounds(Constants.SEEDPACKET_X_START, y, Constants.SEEDPACKET_WIDTH, Constants.SEEDPACKET_HEIGHT);
         
         // Set Cooldown
         cdTime = 20 * Constants.GAME_TURN_MOD;
