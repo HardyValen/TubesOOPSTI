@@ -8,4 +8,12 @@ public class Grid {
             rows.add(new Row(colSize, i));
         }
     }
+
+    public void setEnableAll(boolean b){
+        for (Row row : rows) {
+            for(Tile tile : row.tiles){
+                tile.setEnabled(b);
+            }
+        }
+    }
 }

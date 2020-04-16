@@ -1,10 +1,7 @@
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
@@ -16,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.awt.event.*;
 
-public class GamePanel extends JPanel{
+public class GamePanel extends JLayeredPane{
     public static int frame = 0;
     public static int turn = 0;
     private ImageIcon backgroundImage;
@@ -31,6 +28,10 @@ public class GamePanel extends JPanel{
     public static int sp;     // Sunflower Points
     private JTextField spCounter;
     private JLabel spIcon;
+    private static boolean plantState = false;
+    private static Plant seedPacketPlant;
+    private SeedPacket seedPacketBuffer = null;
+    private int clickBuffer = 0;    // For Cancelling Plant
     
     public GamePanel(){
         initializeVariables();
@@ -49,7 +50,6 @@ public class GamePanel extends JPanel{
 
     private void initializeLayout(){
         setPreferredSize(new Dimension(Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT));
-        sunLayer.setPreferredSize(new Dimension(Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT));
     }
 
     private void initializeSP(){
@@ -92,6 +92,26 @@ public class GamePanel extends JPanel{
         seedPackets.add(new SeedPacketCherryBomb(7));
 
         for (SeedPacket seedPacket : seedPackets) {
+            seedPacket.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent arg0) {
+                    clickBuffer++;
+
+                    if (GamePanel.sp >= seedPacket.cost){
+                        grid.setEnableAll(true);
+                        GamePanel.plantState = true;
+                        seedPacketPlant = seedPacket.getPlant();
+                        seedPacketBuffer = seedPacket;
+                    }
+
+                    // Cancel if seed packet is clicked again
+                    if (clickBuffer == 2){
+                        grid.setEnableAll(false);
+                        GamePanel.plantState = false;
+                        clickBuffer = 0;
+                    }
+                }
+            });
+
             add(seedPacket);
         }
     }
@@ -99,16 +119,39 @@ public class GamePanel extends JPanel{
     private void initializeGrid(){
         setLayout(null);
         grid = new Grid(5, 9);
+
         for(Row row : grid.rows){
             for (Tile tile : row.tiles){
+                tile.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent arg0) {
+                        if (GamePanel.plantState && tile.hasPlant()){
+                            seedPacketPlant.setTile(tile);
+                            tile.plant = GamePanel.seedPacketPlant;
+                            grid.setEnableAll(false);
+                            GamePanel.plantState = false;
+                            GamePanel.sp -= seedPacketBuffer.cost;
+                            spCounter.setText(String.valueOf(sp));
+                            seedPacketBuffer.refreshCooldown();
+                            clickBuffer = 0;
+                        }
+                    }
+                });
                 add(tile);
             }
         }
     }
 
-    private void drawZombies(Graphics g){
+    private void drawEntities(Graphics g){
         for (Zombie zombie : zombies) {
             g.drawImage(zombie.getImage(), zombie.getX(), zombie.getY(), this);
+        }
+
+        for (Row row : grid.rows){
+            for (Tile tile : row.tiles){
+                if (tile.plant != null){
+                    g.drawImage(tile.plant.getImage(), tile.plant.getX(), tile.plant.getY(), this);
+                }
+            }
         }
     }
 
@@ -121,7 +164,7 @@ public class GamePanel extends JPanel{
 
     private void doDrawing(Graphics g){
         if (isInGame){
-            drawZombies(g);
+            drawEntities(g);
         } else {
             if (state.equals("Game Over")) {
                 g.drawImage(gameOverImage.getImage(), 0, 0, null);
@@ -152,9 +195,11 @@ public class GamePanel extends JPanel{
         }
 
         zombieCheckAll();
-        checkGame();
-        spawnZombie();
-        spawnSun();
+        // checkGame();     // GameOverCondition
+        // spawnZombie();
+        spawnSun();         
+        sunControl();       // Controls the sun whose offset
+        checkPlants();
 
         // Update Seed Packet
         for (SeedPacket seedPacket : seedPackets) {
@@ -192,14 +237,15 @@ public class GamePanel extends JPanel{
     private void spawnSun(){
         if (GamePanel.turn % 2 == 1 && isStartOfTurn()){
             Random rand = new Random();
-            int gridWidth = rand.nextInt(grid.rows.size() * Constants.TILE_WIDTH);
+            int gridWidth = rand.nextInt(grid.rows.get(0).tiles.size()) * Constants.TILE_WIDTH;
             int spawnArea = Constants.TILE_X_START + Constants.TILE_WIDTH + gridWidth;
-            Sun sun = new Sun(spawnArea, 0);
+            Sun sun = new Sun(spawnArea, -Constants.ENVIRONMENT_SUN_LAWN_HEIGHT);
             
             // Gives sun the appropriate action listener
             sun.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent arg0) {
-                    sp += 25;
+                    sp += 50;
+                    sunIcons.remove(sun);
                     remove(sun);
                     spCounter.setText(String.valueOf(sp));
                 }
@@ -207,7 +253,7 @@ public class GamePanel extends JPanel{
             
             // Adding sun to panel
             sunIcons.add(sun);
-            add(sun);
+            add(sun, Constants.DEPTH_SUN);
         }
     }
 
@@ -231,15 +277,13 @@ public class GamePanel extends JPanel{
             }
         }
 
-        if (isStartOfTurn()){
-            int counter = 0;
-            for (Sun sun : sunIcons) {
-                System.out.println("Sun " + counter + ": " + sun.x + " " + sun.y);
-                counter++;
-            }
-
-            System.out.println(" ");
+        int counter = 0;
+        for (Sun sun : sunIcons) {
+            System.out.println("Sun " + counter + ": " + sun.x + " " + sun.y);
+            counter++;
         }
+
+        System.out.println(" ");
 
         // Debug
         // if (isStartOfTurn()){
@@ -280,9 +324,12 @@ public class GamePanel extends JPanel{
                     }
                 }
 
-                // Remove SP Counter
+                // Remove SP Counter and Lawn Sun
                 remove(spCounter);
                 remove(spIcon);
+                for (Sun sun : sunIcons) {
+                    remove(sun);
+                }
 
                 isInGame = false;
                 state = "Game Over";
@@ -290,4 +337,23 @@ public class GamePanel extends JPanel{
         }
     }
 
+    private void checkPlants(){
+        for (Row row : grid.rows) {
+            for (Tile tile : row.tiles){
+                tile.checkPlant();
+            }
+        }
+    }
+
+    private void sunControl(){
+        int count = 0;
+        while (count < sunIcons.size()){
+            Sun sun = sunIcons.get(count);
+            if (sun.getY() > Constants.BOARD_HEIGHT) {
+                sunIcons.remove(sun);
+                remove(sun);
+            }
+            count++;
+        }
+    }
 }

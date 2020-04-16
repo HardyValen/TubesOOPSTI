@@ -87,7 +87,38 @@ public class Constants {
     public static final int ENVIRONMENT_SUN_LAWN_WIDTH = 70;
 
     public static final int SUN_VALUE = 50;
+    public static final int DEPTH_SUN = 2;
 
+    // Plant Dimension
+    public static final int PLANTS_PEASHOOTER_HEIGHT = 62;
+    public static final int PLANTS_REPEATER_HEIGHT = 62;
+    public static final int PLANTS_POTATO_MINE_UNARMED_HEIGHT = 31;
+    public static final int PLANTS_POTATO_MINE_READY_HEIGHT = 54;
+    public static final int PLANTS_SUNFLOWER_HEIGHT = 66;
+    public static final int PLANTS_WALLNUT_HEIGHT = 74;
+    public static final int PLANTS_THREEPEATER_HEIGHT = 70;
+    public static final int PLANTS_SPIKEWEED_HEIGHT = 31;
+    public static final int PLANTS_CHERRY_BOMB_HEIGHT = 63;
+
+    public static final int PLANTS_PEASHOOTER_WIDTH = 60;
+    public static final int PLANTS_REPEATER_WIDTH = 60;
+    public static final int PLANTS_POTATO_MINE_UNARMED_WIDTH = 18;
+    public static final int PLANTS_POTATO_MINE_READY_WIDTH = 60;
+    public static final int PLANTS_SUNFLOWER_WIDTH = 60;
+    public static final int PLANTS_WALLNUT_WIDTH = 60;
+    public static final int PLANTS_THREEPEATER_WIDTH = 85;
+    public static final int PLANTS_SPIKEWEED_WIDTH = 60;
+    public static final int PLANTS_CHERRY_BOMB_WIDTH = 60;
+
+    // Plant Costs
+    public static final int PLANTS_PEASHOOTER_COST = 100;
+    public static final int PLANTS_THREEPEATER_COST = 250;
+    public static final int PLANTS_CHERRY_BOMB_COST = 150;
+    public static final int PLANTS_REPEATER_COST = 200;
+    public static final int PLANTS_SUNFLOWER_COST = 50;
+    public static final int PLANTS_WALLNUT_COST = 50;
+    public static final int PLANTS_SPIKEWEED_COST = 100;
+    public static final int PLANTS_POTATO_MINE_COST = 25;
 
     private Constants(){}
 }

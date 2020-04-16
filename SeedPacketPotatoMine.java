@@ -19,4 +19,8 @@ public class SeedPacketPotatoMine extends SeedPacket {
         cdTime = 15 * Constants.GAME_TURN_MOD;
         cdCurrent = cdTime;
     }
+    
+    public Plant getPlant(){
+        return new PotatoMine();
+    }
 }

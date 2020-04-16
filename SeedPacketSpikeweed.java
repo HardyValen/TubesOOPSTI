@@ -18,5 +18,12 @@ public class SeedPacketSpikeweed extends SeedPacket {
         // Set Cooldown
         cdTime = 5 * Constants.GAME_TURN_MOD;
         cdCurrent = cdTime;
+
+        // Set Cost
+        cost = Constants.PLANTS_SPIKEWEED_COST;
+    }
+
+    public Plant getPlant(){
+        return new Spikeweed();
     }
 }

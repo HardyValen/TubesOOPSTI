@@ -18,5 +18,12 @@ public class SeedPacketThreepeater extends SeedPacket {
         // Set Cooldown
         cdTime = 5 * Constants.GAME_TURN_MOD;
         cdCurrent = cdTime;
+
+        // Set Cost
+        cost = Constants.PLANTS_THREEPEATER_COST;
+    }
+
+    public Plant getPlant(){
+        return new Threepeater();
     }
 }

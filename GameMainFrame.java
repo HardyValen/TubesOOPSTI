@@ -16,6 +16,6 @@ public class GameMainFrame extends JFrame{
         setLocationRelativeTo(null);    // Center of the screen
         setResizable(false);            // Cannot Resize
         setVisible(true);
-
+        
     }
 }

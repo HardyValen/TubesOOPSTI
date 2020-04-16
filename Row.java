@@ -21,6 +21,9 @@ public class Row{
                 Constants.TILE_WIDTH,
                 Constants.TILE_HEIGHT
             );
+
+            tiles.get(i).posX = i + 1;
+            tiles.get(i).posY = this.position + 1;
         }
     }
 }

@@ -6,6 +6,7 @@ public abstract class SeedPacket extends JButton{
     private Image image;
     protected int position;
     protected int cdTime;
+    protected int cost;
     protected int cdCurrent;
 
     public SeedPacket(Icon i){
@@ -29,8 +30,19 @@ public abstract class SeedPacket extends JButton{
             cdCurrent--;
             setText(String.valueOf((cdCurrent / Constants.GAME_TURN_MOD) + 1));
         } else {
-            setEnabled(true);
-            setText("");
+            if (cost > GamePanel.sp){
+                setEnabled(false);
+                setText("Get Sun");
+            } else {
+                setEnabled(true);
+                setText("");
+            }
         }
     }
+
+    public void refreshCooldown(){
+        this.cdCurrent = cdTime;
+    }
+
+    public abstract Plant getPlant();
 }

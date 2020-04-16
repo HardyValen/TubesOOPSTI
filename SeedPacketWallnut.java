@@ -17,5 +17,12 @@ public class SeedPacketWallnut extends SeedPacket {
         // Set Cooldown
         cdTime = 15 * Constants.GAME_TURN_MOD;
         cdCurrent = cdTime;
+
+        // Set Cost
+        cost = Constants.PLANTS_WALLNUT_COST;
+    }
+
+    public Plant getPlant(){
+        return new Wallnut();
     }
 }

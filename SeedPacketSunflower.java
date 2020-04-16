@@ -17,5 +17,12 @@ public class SeedPacketSunflower extends SeedPacket {
         // Set Cooldown
         cdTime = 5 * Constants.GAME_TURN_MOD;
         cdCurrent = 0;
+
+        // Set Cost
+        cost = Constants.PLANTS_SUNFLOWER_COST;
+    }
+
+    public Plant getPlant(){
+        return new Sunflower();
     }
 }

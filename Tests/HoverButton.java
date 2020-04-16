@@ -36,56 +36,36 @@ public class HoverButton extends JButton
 
   public class ML extends MouseAdapter
   {
-    public void mouseExited(MouseEvent me)
-    {
-      new Thread(new Runnable()
-      {
-        public void run()
-        {
-          for (float i = 1f; i >= .5f; i -= .03f)
-          {
+    public void mouseExited(MouseEvent me){
+      new Thread(new Runnable() {
+        public void run() {
+          for (float i = 1f; i >= .5f; i -= .03f) {
             setAlpha(i);
-            try
-            {
+            try {
               Thread.sleep(10);
-            }
-            catch (Exception e)
-            {
-            }
+            } catch (Exception e) {}
           }
         }
       }).start();
     }
 
-    public void mouseEntered(MouseEvent me)
-    {
-      new Thread(new Runnable()
-      {
-        public void run()
-        {
-          for (float i = .5f; i <= 1f; i += .03f)
-          {
+    public void mouseEntered(MouseEvent me){
+      new Thread(new Runnable(){
+        public void run(){
+          for (float i = .5f; i <= 1f; i += .03f){
             setAlpha(i);
-            try
-            {
+            try{
               Thread.sleep(10);
-            }
-            catch (Exception e)
-            {
-            }
+            } catch (Exception e){}
           }
         }
       }).start();
     }
 
-    public void mousePressed(MouseEvent me)
-    {
-      new Thread(new Runnable()
-      {
-        public void run()
-        {
-          for (float i = 1f; i >= 0.6f; i -= .1f)
-          {
+    public void mousePressed(MouseEvent me){
+      new Thread(new Runnable(){
+        public void run(){
+          for (float i = 1f; i >= 0.6f; i -= .1f){
             setAlpha(i);
             try
             {

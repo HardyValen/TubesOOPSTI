@@ -19,4 +19,8 @@ public class SeedPacketCherryBomb extends SeedPacket {
         cdTime = 20 * Constants.GAME_TURN_MOD;
         cdCurrent = cdTime;
     }
+
+    public Plant getPlant(){
+        return new CherryBomb();
+    }
 }
