@@ -1,11 +1,12 @@
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class GamePanel extends JPanel{
     public static int frame = 0;
@@ -14,12 +15,14 @@ public class GamePanel extends JPanel{
     private ImageIcon gameOverImage;
     private Timer timer;
     private ArrayList<Zombie> zombies = new ArrayList<Zombie>();
+    private ArrayList<SeedPacket> seedPackets = new ArrayList<SeedPacket>();
     private boolean isInGame = true;
     private String state = "Game";
     
     public GamePanel(){
         initializeVariables();
         initializeLayout();
+        initialializeSeedPackets();
     }
 
     private void initializeVariables(){
@@ -78,42 +81,33 @@ public class GamePanel extends JPanel{
             zombie.move();
         }
 
-        zombieCheckAll();
-        checkGame();
+        // zombieCheckAll();
+        // checkGame();
         spawnZombie();
+        for (SeedPacket seedPacket : seedPackets) {
+            seedPacket.updateSeedPacket();
+        }
     }
 
     private void spawnZombie(){
-        int a = 0;
-
         if (GamePanel.turn % 2 == 1 && isStartOfTurn()) {
-            Random rand = new Random();
-            a = rand.nextInt(5) + 1;
-            zombies.add(new NormalZombie(a));
+            zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_NORMAL));
         }
 
         if (GamePanel.turn % 3 == 2 && isStartOfTurn()) {
-            Random rand = new Random();
-            a = rand.nextInt(5) + 1;
-            zombies.add(new ConeheadZombie(a));
+            zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_CONEHEAD));
         }
 
         if (GamePanel.turn % 5 == 1 && isStartOfTurn()) {
-            Random rand = new Random();
-            a = rand.nextInt(5) + 1;
-            zombies.add(new BucketheadZombie(a));
+            zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_BUCKETHEAD));
         }
 
         if (GamePanel.turn % 7 == 1 && isStartOfTurn()) {
-            Random rand = new Random();
-            a = rand.nextInt(5) + 1;
-            zombies.add(new BrickheadZombie(a));
+            zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_BRICKHEAD));
         }
 
         if (GamePanel.turn % 10 == 1 && isStartOfTurn()) {
-            Random rand = new Random();
-            a = rand.nextInt(5) + 1;
-            zombies.add(new Gargantuar(a));
+            zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_GARGANTUAR));
         }
     }
 
@@ -126,7 +120,6 @@ public class GamePanel extends JPanel{
 
         if (isStartOfTurn()){
             for (Zombie zombie : zombies) {
-                zombie.damageByAmount(10);
                 System.out.println(zombie.getClass().getSimpleName() + " " + zombie.getCurrentHealth());
             }
         }
@@ -160,11 +153,27 @@ public class GamePanel extends JPanel{
 
     private void checkGame(){
         if (zombies.size() > 0) {
-            if (zombies.get(0).getX() < 297) {
+            if (zombies.get(0).getX() < Constants.TILE_X_START) {
                 zombies.clear();
                 isInGame = false;
                 state = "Game Over";
             }
+        }
+    }
+
+    private void initialializeSeedPackets(){
+        setLayout(null);
+        seedPackets.add(new SeedPacketPeashooter(0));
+        seedPackets.add(new SeedPacketRepeater(1));
+        seedPackets.add(new SeedPacketThreepeater(2));
+        seedPackets.add(new SeedPacketSunflower(3));
+        seedPackets.add(new SeedPacketWallnut(4));
+        seedPackets.add(new SeedPacketSpikeweed(5));
+        seedPackets.add(new SeedPacketPotatoMine(6));
+        seedPackets.add(new SeedPacketCherryBomb(7));
+
+        for (SeedPacket seedPacket : seedPackets) {
+            add(seedPacket);
         }
     }
 }

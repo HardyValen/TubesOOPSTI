@@ -6,7 +6,9 @@ public class Constants {
     public static final int BOARD_HEIGHT = 576;
     public static final int TILE_HEIGHT = 81;
     public static final int TILE_WIDTH = 67;
-    public static final int TILE_START = 127;
+    public static final int TILE_X_START = 297;
+    public static final int TILE_Y_START = 127;
+    
 
     // Game Assets
     public static final String BUTTON_PLAY_GAME_URL = "assets/Buttons/ButtonPlayGame.png";
@@ -53,7 +55,7 @@ public class Constants {
     public static final int GAME_SPEED = 33; // In milliseconds. 1000 /  33 ~= 30 fps, 50 ~= 20fps, 100 ~= 10fps
     public static final int GAME_TURN_MOD = 1000 / GAME_SPEED;
 
-    // Entity Dimension
+    // Zombie Dimension
     public static final int ZOMBIES_NORMAL_WIDTH = 70;
     public static final int ZOMBIES_CONEHEAD_WIDTH = 70;
     public static final int ZOMBIES_BUCKETHEAD_WIDTH = 80;
@@ -65,7 +67,15 @@ public class Constants {
     public static final int ZOMBIES_BUCKETHEAD_HEIGHT = 130;
     public static final int ZOMBIES_BRICKHEAD_HEIGHT = 127;
     public static final int ZOMBIES_GARGANTUAR_HEIGHT = 247;
+
+    public static final int ZOMBIES_MOVESPEED_NORMAL_X = -1;
+    public static final int ZOMBIES_MOVESPEED_FAST_X = -2;
     
+    // Seed Packet Dimension
+    public static final int SEEDPACKET_X_START = 50 ;
+    public static final int SEEDPACKET_Y_START = 77;
+    public static final int SEEDPACKET_HEIGHT = 50;
+    public static final int SEEDPACKET_WIDTH = 100;
 
     private Constants(){}
 }

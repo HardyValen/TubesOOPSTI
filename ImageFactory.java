@@ -62,6 +62,7 @@ public class ImageFactory {
             case PLANTS_WALLNUT:
                 imageIcon = new ImageIcon(Constants.PLANTS_WALLNUT_URL);
                 break;
+
             case SEEDPACKETS_CHERRY_BOMB:
                 imageIcon = new ImageIcon(Constants.SEEDPACKETS_CHERRY_BOMB_URL);
                 break;
@@ -86,6 +87,7 @@ public class ImageFactory {
             case SEEDPACKETS_WALLNUT:
                 imageIcon = new ImageIcon(Constants.SEEDPACKETS_WALLNUT_URL);
                 break;
+
             case ZOMBIES_NORMAL:
                 imageIcon = new ImageIcon(Constants.ZOMBIES_NORMAL_URL);
                 break;

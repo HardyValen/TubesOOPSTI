@@ -1,9 +1,17 @@
-import javax.swing.ImageIcon;
-
-public abstract class Zombie extends Entity {
+public class Zombie extends Entity {
     protected int attackDamage;
     protected int maxHealth;
     protected int currentHealth;
+
+    public Zombie(int attackDamage, int maxHealth){
+        this.attackDamage = attackDamage;
+        this.maxHealth = maxHealth;
+        this.currentHealth = maxHealth;
+
+        // Mungkin ditaro di konstanta
+        dx = -1;
+        dy = 0;
+    }
 
     public int getCurrentHealth() {
         return currentHealth;
