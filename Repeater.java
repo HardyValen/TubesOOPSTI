@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Repeater extends Plant{
     protected int actionDelay;
@@ -20,8 +21,9 @@ public class Repeater extends Plant{
         setDX(0);
         setDY(0);
 
+        Random rand = new Random();
         actionTime = Constants.PLANTS_REPEATER_ACTIONTIME;
-        actionCurrent = actionTime;
+        actionCurrent = rand.nextInt(actionTime);;
 
         actionDelay = Constants.PLANTS_REPEATER_ACTIONDELAY;
         actionDelayCurrent = actionDelay;

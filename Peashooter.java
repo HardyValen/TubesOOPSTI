@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Peashooter extends Plant{
     public Peashooter(){
@@ -17,8 +18,9 @@ public class Peashooter extends Plant{
         setDX(0);
         setDY(0);
 
+        Random rand = new Random();
         actionTime = Constants.PLANTS_PEASHOOTER_ACTIONTIME;
-        actionCurrent = actionTime;
+        actionCurrent = rand.nextInt(actionTime);;
     }
 
     public ArrayList<Projectile> actionShootable(){

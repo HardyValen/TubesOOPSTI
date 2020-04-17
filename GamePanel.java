@@ -126,7 +126,6 @@ public class GamePanel extends JLayeredPane{
                 tile.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent arg0) {
                         if (GamePanel.plantState && tile.hasPlant()){
-                            System.out.println(seedPacketPlant.currentHealth);
                             seedPacketPlant.setTile(tile);
                             tile.plant = GamePanel.seedPacketPlant;
                             grid.setEnableAll(false);
@@ -196,6 +195,11 @@ public class GamePanel extends JLayeredPane{
             GamePanel.turn++;
         }
 
+        // SPAWN SINGLE ZOMBIE ONLY FOR DEBUG PURPOSE
+        // if (GamePanel.frame == 1) {
+        //     zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_NORMAL));
+        // }
+
         checkCollision();
         checkGame();     // GameOverCondition
         spawnZombie();
@@ -204,6 +208,7 @@ public class GamePanel extends JLayeredPane{
         checkPlants();      // Grid Checker
         updatePlants();
         spawnProjectiles();
+        explosionControl();
 
         // Update Seed Packet
         for (SeedPacket seedPacket : seedPackets) {
@@ -279,7 +284,6 @@ public class GamePanel extends JLayeredPane{
                     if (zombie.attackDelayCurrent <= 0) {
                         selectedPlant.damageByAmount(zombie.getAttackDamage());
                         zombie.refreshAttack();
-                        System.out.println(selectedPlant.currentHealth);
 
                         if (selectedPlant.getCurrentHealth() <= 0) {
                             selectedPlant.setIsDead(true);
@@ -308,29 +312,29 @@ public class GamePanel extends JLayeredPane{
     }
 
     private void spawnZombie(){
-        if (GamePanel.turn % 10 == 0 && isStartOfTurn() && GamePanel.turn >= 7) {
+        if (GamePanel.turn % 1 == 0 && isStartOfTurn() && GamePanel.turn >= 1) {
             zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_NORMAL));
         }
 
-        if (GamePanel.turn % 13 == 0 && isStartOfTurn() && GamePanel.turn >= 12) {
+        if (GamePanel.turn % 1 == 0 && isStartOfTurn() && GamePanel.turn >= 1) {
             zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_CONEHEAD));
         }
 
-        if (GamePanel.turn % 14 == 0 && isStartOfTurn() && GamePanel.turn >= 16) {
+        if (GamePanel.turn % 1 == 0 && isStartOfTurn() && GamePanel.turn >= 1) {
             zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_BUCKETHEAD));
         }
 
-        if (GamePanel.turn % 15 == 0 && isStartOfTurn() && GamePanel.turn >= 24) {
+        if (GamePanel.turn % 1 == 0 && isStartOfTurn() && GamePanel.turn >= 1) {
             zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_BRICKHEAD));
         }
 
-        if (GamePanel.turn % 20 == 0 && isStartOfTurn() && GamePanel.turn >= 30) {
+        if (GamePanel.turn % 1 == 0 && isStartOfTurn() && GamePanel.turn >= 1) {
             zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_GARGANTUAR));
         }
     }
 
     private void spawnSun(){
-        if (GamePanel.turn % 2 == 1 && isStartOfTurn()){
+        if (GamePanel.turn % 4 == 1 && isStartOfTurn()){
             Random rand = new Random();
             int gridWidth = rand.nextInt(grid.rows.get(0).tiles.size()) * Constants.TILE_WIDTH;
             int spawnArea = Constants.TILE_X_START + Constants.TILE_WIDTH + gridWidth;
@@ -349,6 +353,26 @@ public class GamePanel extends JLayeredPane{
             // Adding sun to panel
             sunIcons.add(sun);
             add(sun, Constants.DEPTH_SUN);
+        }
+
+        for (Row row : grid.rows) {
+            for (Tile tile : row.tiles){
+                if (tile.plant != null) {
+                    Sun sun = tile.plant.actionGenerate();
+                    if (sun != null) {
+                        sun.addActionListener(new ActionListener(){
+                            public void actionPerformed(ActionEvent arg0) {
+                                sp += 50;
+                                sunIcons.remove(sun);
+                                remove(sun);
+                                spCounter.setText(String.valueOf(sp));
+                            }
+                        });
+                        sunIcons.add(sun);
+                        add(sun, Constants.DEPTH_SUN);
+                    }
+                }
+            }
         }
     }
 
@@ -380,7 +404,17 @@ public class GamePanel extends JLayeredPane{
 
     private void checkGame(){
         if (zombies.size() > 0) {
-            if (zombies.get(0).getX() < Constants.TILE_X_START + 50) {
+            boolean flag = false;
+            int i = 0;
+            while (!flag && i < zombies.size()) {
+                if (zombies.get(i).getX() < Constants.TILE_X_START){
+                    flag = true;
+                } else {
+                    i++;
+                }
+            }
+
+            if (flag) {
                 zombies.clear();
 
                 // Clear Seed Packets
@@ -471,9 +505,42 @@ public class GamePanel extends JLayeredPane{
             for (Tile tile : row.tiles){
                 if (tile.plant != null) {
                     tile.plant.actionCurrent--;
-                    System.out.println(tile.plant.actionCurrent);
                 }
             }
         }
+    }
+
+    private void explosionControl(){
+
+        for (Row row : grid.rows) {
+            for (Tile tile : row.tiles){
+                if (tile.plant != null) {
+                    if (tile.plant.actionExplode() == 1) {
+                        int plantX = tile.plant.hitboxX;
+                        int plantY = tile.plant.hitboxY;
+                        int plantWidth = tile.plant.hitboxWidth;
+                        int plantHeight = tile.plant.hitboxHeight;
+
+                        for(Zombie zombie : zombies){
+                            int zombieX = zombie.hitboxX;
+                            int zombieY = zombie.hitboxY;
+                            int zombieWidth = zombie.hitboxWidth;
+                            int zombieHeight = zombie.hitboxHeight;
+            
+                            if (
+                                plantX < zombieX + zombieWidth &&
+                                plantX + plantWidth > zombieX &&
+                                plantY < zombieY + zombieHeight &&
+                                plantY + plantHeight > zombieY
+                            ) {
+                                zombie.damageByAmount(Constants.EXPLOSION_DAMAGE_CHERRY_BOMB);
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
     }
 }

@@ -27,5 +27,13 @@ public abstract class Plant extends Entity implements Damageable{
         actionCurrent = actionTime;
     }
 
-    public ArrayList<Projectile> actionShootable(){return null;}  // To be written in ? extends Plant.
+    public ArrayList<Projectile> actionShootable(){return null;}  // To be written in peashooter family
+    public Sun actionGenerate(){return null;} // To be written in sun family
+    public int actionExplode(){return -1;}   // To be written in explosive plants
+
+    // Explode state:
+    // -1 = non explosive plant
+    // 0 = explosive plant not exploded yet
+    // 1 = explosive plant exploded, damaging everything in the radius
+    // 2 = explosive plant aftermath and will be removed if action time is 0
 }

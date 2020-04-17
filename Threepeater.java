@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Threepeater extends Plant{
     public Threepeater(){
@@ -16,9 +17,10 @@ public class Threepeater extends Plant{
         setY(Constants.TILE_Y_START + (Constants.TILE_HEIGHT * (tile.posY + 1)) - Constants.PLANTS_THREEPEATER_HEIGHT);
         setDX(0);
         setDY(0);
-
+        
+        Random rand = new Random();
         actionTime = Constants.PLANTS_THREEPEATER_ACTIONTIME;
-        actionCurrent = actionTime;
+        actionCurrent = rand.nextInt(actionTime);;
     }
 
     public ArrayList<Projectile> actionShootable(){
