@@ -18,6 +18,7 @@ public class Tile extends JButton{
         setEnabled(false);
         addMouseListener(new ML());
         this.row = row;
+
     }
 
     public float getAlpha() {

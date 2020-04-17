@@ -4,7 +4,7 @@ public class PeaProjectile extends Projectile {
         hitboxWidth = Constants.ENVIRONMENT_PEA_PROJECTILE_WIDTH;
         hitboxHeight = Constants.ENVIRONMENT_PEA_PROJECTILE_HEIGHT;
         setImage(ImageFactory.createImage(Image.ENVIRONMENT_PEA_PROJECTILE).getImage());
-        attackDamage = 4;
+        attackDamage = Constants.PROJECTILE_PEA_DAMAGE;
         delayDamage = 0;
 
         setX(Constants.TILE_X_START + (Constants.TILE_WIDTH * (tile.posX + 1))  + (Constants.TILE_WIDTH / 2) - (Constants.ENVIRONMENT_PEA_PROJECTILE_WIDTH / 2));

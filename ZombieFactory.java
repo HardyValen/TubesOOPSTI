@@ -59,7 +59,7 @@ public class ZombieFactory {
                 break;
             case ZOMBIES_GARGANTUAR:
                 z = new Zombie(2000, Constants.ZOMBIES_GARGANTUAR_HEALTH);
-                z.hitboxWidth = Constants.ZOMBIES_GARGANTUAR_WIDTH;
+                z.hitboxWidth = Constants.ZOMBIES_BRICKHEAD_WIDTH;
                 z.hitboxHeight = Constants.TILE_HEIGHT;
                 z.hitboxX = start_x;
                 z.hitboxY = start_y - Constants.TILE_HEIGHT;

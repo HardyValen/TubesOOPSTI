@@ -30,7 +30,8 @@ public abstract class Plant extends Entity implements Damageable{
     public ArrayList<Projectile> actionShootable(){return null;}  // To be written in peashooter family
     public Sun actionGenerate(){return null;} // To be written in sun family
     public int actionExplode(){return -1;}   // To be written in explosive plants
-
+    public boolean actionSpike(){return false;} // To be written in spikeweed
+    
     // Explode state:
     // -1 = non explosive plant
     // 0 = explosive plant not exploded yet

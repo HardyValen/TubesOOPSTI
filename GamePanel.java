@@ -33,6 +33,7 @@ public class GamePanel extends JLayeredPane{
     private static Plant seedPacketPlant;
     private SeedPacket seedPacketBuffer = null;
     private int clickBuffer = 0;    // For Cancelling Plant
+    private int[] zombieSpawnTimer = {10, 20, 40, 80, 120};
     
     public GamePanel(){
         initializeVariables();
@@ -89,8 +90,7 @@ public class GamePanel extends JLayeredPane{
         seedPackets.add(new SeedPacketSunflower(3));
         seedPackets.add(new SeedPacketWallnut(4));
         seedPackets.add(new SeedPacketSpikeweed(5));
-        seedPackets.add(new SeedPacketPotatoMine(6));
-        seedPackets.add(new SeedPacketCherryBomb(7));
+        seedPackets.add(new SeedPacketCherryBomb(6));
 
         for (SeedPacket seedPacket : seedPackets) {
             seedPacket.addActionListener(new ActionListener(){
@@ -209,6 +209,7 @@ public class GamePanel extends JLayeredPane{
         updatePlants();
         spawnProjectiles();
         explosionControl();
+        checkSpikeweed();
 
         // Update Seed Packet
         for (SeedPacket seedPacket : seedPackets) {
@@ -312,24 +313,35 @@ public class GamePanel extends JLayeredPane{
     }
 
     private void spawnZombie(){
-        if (GamePanel.turn % 1 == 0 && isStartOfTurn() && GamePanel.turn >= 1) {
+        Random rand = new Random();
+        // SPAWN NORMAL ZOMBIE ON 10th turn for every 4 .. 11 turns onward
+        if (GamePanel.turn % zombieSpawnTimer[0] == 0 && isStartOfTurn() && GamePanel.turn >= 10) {
             zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_NORMAL));
+            zombieSpawnTimer[0] = rand.nextInt(8) + 4;
         }
 
-        if (GamePanel.turn % 1 == 0 && isStartOfTurn() && GamePanel.turn >= 1) {
+        // SPAWN CONEHEAD ZOMBIE ON 20th turn for every 8 .. 19 turns onward
+        if (GamePanel.turn % zombieSpawnTimer[1] == 0 && isStartOfTurn() && GamePanel.turn >= 20) {
             zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_CONEHEAD));
+            zombieSpawnTimer[1] = rand.nextInt(12) + 8;
         }
 
-        if (GamePanel.turn % 1 == 0 && isStartOfTurn() && GamePanel.turn >= 1) {
+        // SPAWN BUCKETHEAD ZOMBIE ON 40th turn for every 10 .. 24 turns onward
+        if (GamePanel.turn % zombieSpawnTimer[2] == 0 && isStartOfTurn() && GamePanel.turn >= 40) {
             zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_BUCKETHEAD));
+            zombieSpawnTimer[2] = rand.nextInt(15) + 10;
         }
 
-        if (GamePanel.turn % 1 == 0 && isStartOfTurn() && GamePanel.turn >= 1) {
+        // SPAWN BRICKHEAD ZOMBIE ON 80th turn for every 15 .. 44 turns onward
+        if (GamePanel.turn % zombieSpawnTimer[3] == 0 && isStartOfTurn() && GamePanel.turn >= 80) {
             zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_BRICKHEAD));
+            zombieSpawnTimer[3] = rand.nextInt(30) + 15;
         }
 
-        if (GamePanel.turn % 1 == 0 && isStartOfTurn() && GamePanel.turn >= 1) {
+        // SPAWN GARGANTUAR ON 120th turn for every 30 .. 79 turns onward
+        if (GamePanel.turn % zombieSpawnTimer[4] == 0 && isStartOfTurn() && GamePanel.turn >= 120) {
             zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_GARGANTUAR));
+            zombieSpawnTimer[4] = rand.nextInt(50) + 30;
         }
     }
 
@@ -511,7 +523,6 @@ public class GamePanel extends JLayeredPane{
     }
 
     private void explosionControl(){
-
         for (Row row : grid.rows) {
             for (Tile tile : row.tiles){
                 if (tile.plant != null) {
@@ -541,6 +552,36 @@ public class GamePanel extends JLayeredPane{
                 }
             }
         }
+    }
 
+    private void checkSpikeweed(){
+        for (Row row : grid.rows) {
+            for (Tile tile : row.tiles){
+                if (tile.plant != null) {
+                    if (tile.plant.actionSpike()) {
+                        int plantX = tile.plant.hitboxX;
+                        int plantY = tile.plant.hitboxY;
+                        int plantWidth = tile.plant.hitboxWidth;
+                        int plantHeight = tile.plant.hitboxHeight;
+
+                        for(Zombie zombie : zombies){
+                            int zombieX = zombie.hitboxX;
+                            int zombieY = zombie.hitboxY;
+                            int zombieWidth = zombie.hitboxWidth;
+                            int zombieHeight = zombie.hitboxHeight;
+            
+                            if (
+                                plantX < zombieX + zombieWidth &&
+                                plantX + plantWidth > zombieX &&
+                                plantY < zombieY + zombieHeight &&
+                                plantY + plantHeight > zombieY
+                            ) {
+                                zombie.damageByAmount(Constants.SPIKEWEED_DAMAGE);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
