@@ -1,12 +1,17 @@
 import java.util.ArrayList;
 
 public class Grid {
-    ArrayList<Row> rows = new ArrayList<Row>();
+    protected ArrayList<Row> rows = new ArrayList<Row>();
+    protected int rowSize;
+    protected int colSize;
     
     public Grid(int rowSize, int colSize){
         for (int i = 0; i < rowSize; i++) {
-            rows.add(new Row(colSize, i));
+            rows.add(new Row(colSize, i, this));
         }
+
+        this.rowSize = rowSize;
+        this.colSize = colSize; 
     }
 
     public void setEnableAll(boolean b){

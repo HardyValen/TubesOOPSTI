@@ -1,13 +1,18 @@
 
 public class PotatoMine extends Plant{
     public PotatoMine(){
+        hitboxWidth = Constants.PLANTS_POTATO_MINE_UNARMED_WIDTH;
+        hitboxHeight = Constants.PLANTS_POTATO_MINE_UNARMED_HEIGHT;
         setImage(ImageFactory.createImage(Image.PLANTS_POTATO_MINE_UNARMED).getImage());
+
+        maxHealth = Constants.PLANTS_POTATO_MINE_HEALTH;
+        currentHealth = maxHealth;
     }
 
     public void setTile(Tile tile){
         this.tile = tile;
-        setX(Constants.TILE_X_START + (Constants.TILE_WIDTH * (tile.posX)) + (Constants.TILE_WIDTH / 2) - (Constants.PLANTS_POTATO_MINE_UNARMED_WIDTH / 2));
-        setY(Constants.TILE_Y_START + (Constants.TILE_HEIGHT * tile.posY) - Constants.PLANTS_POTATO_MINE_UNARMED_HEIGHT);
+        setX(Constants.TILE_X_START + (Constants.TILE_WIDTH * (tile.posX + 1)) + (Constants.TILE_WIDTH / 2) - (Constants.PLANTS_POTATO_MINE_UNARMED_WIDTH / 2));
+        setY(Constants.TILE_Y_START + (Constants.TILE_HEIGHT * (tile.posY + 1)) - Constants.PLANTS_POTATO_MINE_UNARMED_HEIGHT);
         setDX(0);
         setDY(0);
     }

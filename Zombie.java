@@ -2,6 +2,8 @@ public class Zombie extends Entity implements Damageable{
     protected int attackDamage;
     protected int maxHealth;
     protected int currentHealth;
+    protected int attackDelay;
+    protected int attackDelayCurrent;
 
     public Zombie(int attackDamage, int maxHealth){
         this.attackDamage = attackDamage;
@@ -11,6 +13,8 @@ public class Zombie extends Entity implements Damageable{
         // Mungkin ditaro di konstanta
         dx = -1;
         dy = 0;
+        attackDelay = Constants.ZOMBIES_NORMAL_ATK_DELAY;
+        attackDelayCurrent = 0;
     }
 
     public int getCurrentHealth() {
@@ -29,8 +33,14 @@ public class Zombie extends Entity implements Damageable{
         currentHealth -= a;   
     }
 
+    public void refreshAttack(){
+        attackDelayCurrent = attackDelay;
+    }
+
     public void move(){
         this.x += this.dx;
         this.y += this.dy;
+        hitboxX += dx;
+        hitboxY += dy;
     }
 }

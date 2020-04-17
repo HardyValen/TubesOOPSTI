@@ -15,7 +15,7 @@ public class SeedPacketRepeater extends SeedPacket {
         setBounds(Constants.SEEDPACKET_X_START, y, Constants.SEEDPACKET_WIDTH, Constants.SEEDPACKET_HEIGHT);
 
         // Set Cooldown
-        cdTime = 5 * Constants.GAME_TURN_MOD;
+        cdTime = Constants.SEEDPACKET_REPEATER_COOLDOWN;
         cdCurrent = cdTime;
 
         // Set Cost

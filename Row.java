@@ -3,14 +3,17 @@ import java.util.ArrayList;
 public class Row{
     protected int position;
     protected ArrayList <Tile> tiles = new ArrayList<Tile>();
+    protected Grid grid;
 
-    public Row(int length, int position){
-        for(int i = 0; i < length; i++){
-            tiles.add(new Tile());
-        }
-
+    public Row(int length, int position, Grid grid){
         this.position = position;
+        for(int i = 0; i < length; i++){
+            tiles.add(new Tile(this));
+            tiles.get(i).posX = i;
+            tiles.get(i).posY = position;
+        }
         initialize();
+        this.grid = grid;
     }
 
     private void initialize(){
@@ -21,9 +24,6 @@ public class Row{
                 Constants.TILE_WIDTH,
                 Constants.TILE_HEIGHT
             );
-
-            tiles.get(i).posX = i + 1;
-            tiles.get(i).posY = this.position + 1;
         }
     }
 }

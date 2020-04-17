@@ -22,6 +22,7 @@ public class GamePanel extends JLayeredPane{
     private ArrayList<Zombie> zombies = new ArrayList<Zombie>();
     private ArrayList<SeedPacket> seedPackets = new ArrayList<SeedPacket>();
     private ArrayList<Sun> sunIcons = new ArrayList<Sun>();
+    private ArrayList<Projectile> projectiles = new ArrayList<Projectile>(); 
     private boolean isInGame = true;
     private String state = "Game";
     private Grid grid;
@@ -54,7 +55,7 @@ public class GamePanel extends JLayeredPane{
 
     private void initializeSP(){
         // Initialize SP
-        sp = 50;
+        sp = Constants.STARTING_SUN;
 
         // SP counter
         setLayout(null);
@@ -125,6 +126,7 @@ public class GamePanel extends JLayeredPane{
                 tile.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent arg0) {
                         if (GamePanel.plantState && tile.hasPlant()){
+                            System.out.println(seedPacketPlant.currentHealth);
                             seedPacketPlant.setTile(tile);
                             tile.plant = GamePanel.seedPacketPlant;
                             grid.setEnableAll(false);
@@ -144,6 +146,10 @@ public class GamePanel extends JLayeredPane{
     private void drawEntities(Graphics g){
         for (Zombie zombie : zombies) {
             g.drawImage(zombie.getImage(), zombie.getX(), zombie.getY(), this);
+        }
+
+        for (Projectile projectile : projectiles){
+            g.drawImage(projectile.getImage(), projectile.getX(), projectile.getY(), this);
         }
 
         for (Row row : grid.rows){
@@ -190,16 +196,14 @@ public class GamePanel extends JLayeredPane{
             GamePanel.turn++;
         }
 
-        for (Zombie zombie : zombies) {
-            zombie.move();
-        }
-
-        zombieCheckAll();
-        // checkGame();     // GameOverCondition
-        // spawnZombie();
+        checkCollision();
+        checkGame();     // GameOverCondition
+        spawnZombie();
         spawnSun();         
-        sunControl();       // Controls the sun whose offset
-        checkPlants();
+        entityControl();       // Controls the sun and projectile whose offset and zombies, plants too
+        checkPlants();      // Grid Checker
+        updatePlants();
+        spawnProjectiles();
 
         // Update Seed Packet
         for (SeedPacket seedPacket : seedPackets) {
@@ -210,26 +214,117 @@ public class GamePanel extends JLayeredPane{
         for (Sun sun : sunIcons) {
             sun.move();
         }
+
+        // Update Projectile Movement
+        for (Projectile projectile: projectiles) {
+            projectile.move();
+        }
+    }
+
+    private void checkCollision(){
+        for (Projectile projectile : projectiles) {
+            int projectileX = projectile.getX();
+            int projectileY = projectile.getY();
+
+            for(Zombie zombie : zombies){
+                int zombieX = zombie.hitboxX;
+                int zombieY = zombie.hitboxY;
+
+                if (
+                    projectileX >= zombieX &&
+                    projectileX <= (zombieX + zombie.hitboxWidth) &&
+                    projectileY >= zombieY &&
+                    projectileY <= (zombieY + zombie.hitboxHeight)
+                ) {
+                    zombie.damageByAmount(projectile.attackDamage);
+                    projectile.setIsDead(true);
+                }
+            }
+        }
+
+        for(Zombie zombie : zombies){
+            int zombieX = zombie.hitboxX;
+            int zombieY = zombie.hitboxY;
+
+            ArrayList<Plant> plantBuffer = new ArrayList<Plant>();
+            
+            for(Row row : grid.rows){
+                for(Tile tile : row.tiles){
+                    if (tile.plant != null){
+                        plantBuffer.add(tile.plant);
+                    }
+                }
+            }
+
+            int i = 0;
+            boolean moveFlag = true;
+            Plant selectedPlant = null;
+            while(i < plantBuffer.size() && moveFlag){
+                int plantX = plantBuffer.get(i).getX();
+                int plantY = plantBuffer.get(i).getY();
+                if (
+                    plantX >= zombieX &&
+                    plantX <= (zombieX + zombie.hitboxWidth) &&
+                    plantY >= zombieY &&
+                    plantY <= (zombieY + zombie.hitboxHeight)
+                ) {
+                    moveFlag = false;
+                    selectedPlant = plantBuffer.get(i);
+                }
+                i++;
+            }
+            
+            if (!moveFlag) {
+                if (!selectedPlant.phaseable) {
+                    if (zombie.attackDelayCurrent <= 0) {
+                        selectedPlant.damageByAmount(zombie.getAttackDamage());
+                        zombie.refreshAttack();
+                        System.out.println(selectedPlant.currentHealth);
+
+                        if (selectedPlant.getCurrentHealth() <= 0) {
+                            selectedPlant.setIsDead(true);
+                        }
+                    } else {
+                        if (zombie.attackDelayCurrent > 0) {
+                            zombie.attackDelayCurrent--;
+                        }
+                    }
+                } else {
+                    if (zombie.attackDelayCurrent > 0) {
+                        zombie.attackDelayCurrent--;
+                    } else {
+                        zombie.move();
+                    }
+                }
+            } else {
+                if (zombie.attackDelayCurrent > 0) {
+                    zombie.attackDelayCurrent--;
+                } else {
+                    zombie.move();
+                }
+            }
+
+        }
     }
 
     private void spawnZombie(){
-        if (GamePanel.turn % 2 == 1 && isStartOfTurn()) {
+        if (GamePanel.turn % 10 == 0 && isStartOfTurn() && GamePanel.turn >= 7) {
             zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_NORMAL));
         }
 
-        if (GamePanel.turn % 3 == 2 && isStartOfTurn()) {
+        if (GamePanel.turn % 13 == 0 && isStartOfTurn() && GamePanel.turn >= 12) {
             zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_CONEHEAD));
         }
 
-        if (GamePanel.turn % 5 == 1 && isStartOfTurn()) {
+        if (GamePanel.turn % 14 == 0 && isStartOfTurn() && GamePanel.turn >= 16) {
             zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_BUCKETHEAD));
         }
 
-        if (GamePanel.turn % 7 == 1 && isStartOfTurn()) {
+        if (GamePanel.turn % 15 == 0 && isStartOfTurn() && GamePanel.turn >= 24) {
             zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_BRICKHEAD));
         }
 
-        if (GamePanel.turn % 10 == 1 && isStartOfTurn()) {
+        if (GamePanel.turn % 20 == 0 && isStartOfTurn() && GamePanel.turn >= 30) {
             zombies.add(ZombieFactory.createZombie(ZombieKey.ZOMBIES_GARGANTUAR));
         }
     }
@@ -263,35 +358,11 @@ public class GamePanel extends JLayeredPane{
 
     private void zombieCheckAll(){
         int i = 0;
-
-        // Debug
-        // if (isStartOfTurn()){
-        //     for (Zombie zombie : zombies) {
-        //         System.out.println(zombie.getClass().getSimpleName() + " " + zombie.getCurrentHealth());
-        //     }
-        // }
-
         while (zombies.size() > 0 && i < zombies.size()) {
             if (!this.zombieCheckHP(i)) {
                 i++;
             }
         }
-
-        int counter = 0;
-        for (Sun sun : sunIcons) {
-            System.out.println("Sun " + counter + ": " + sun.x + " " + sun.y);
-            counter++;
-        }
-
-        System.out.println(" ");
-
-        // Debug
-        // if (isStartOfTurn()){
-        //     for (Zombie zombie : zombies) {
-        //         System.out.print(zombie.getClass().getSimpleName() + ", ");
-        //     }
-        //     System.out.println(" ");
-        // }
     }
 
     private boolean zombieCheckHP(int i){
@@ -309,7 +380,7 @@ public class GamePanel extends JLayeredPane{
 
     private void checkGame(){
         if (zombies.size() > 0) {
-            if (zombies.get(0).getX() < Constants.TILE_X_START) {
+            if (zombies.get(0).getX() < Constants.TILE_X_START + 50) {
                 zombies.clear();
 
                 // Clear Seed Packets
@@ -345,7 +416,8 @@ public class GamePanel extends JLayeredPane{
         }
     }
 
-    private void sunControl(){
+    private void entityControl(){
+        // Sun Control
         int count = 0;
         while (count < sunIcons.size()){
             Sun sun = sunIcons.get(count);
@@ -354,6 +426,54 @@ public class GamePanel extends JLayeredPane{
                 remove(sun);
             }
             count++;
+        }
+
+        // Projectile Control
+        count = 0;
+        while (count < projectiles.size()){
+            Projectile p = projectiles.get(count);
+            if (p.getX() > Constants.BOARD_WIDTH || p.isDead()) {
+                projectiles.remove(p);
+            }
+            count++;
+        }
+
+        // Legacy Zombie Control
+        zombieCheckAll();
+
+        // Plant Control
+        for(Row row : grid.rows){
+            for (Tile tile : row.tiles){
+                if (tile.plant != null) {
+                    if (tile.plant.isDead()){
+                        tile.plant = null;
+                    }
+                }
+            }
+        }
+    }
+
+    private void spawnProjectiles(){
+        for (Row row : grid.rows) {
+            for (Tile tile : row.tiles){
+                if (tile.plant != null) {
+                    ArrayList<Projectile> buffer = tile.plant.actionShootable();
+                    if (buffer != null) {
+                        projectiles.addAll(buffer);
+                    }
+                }
+            }
+        }
+    }
+
+    private void updatePlants(){
+        for (Row row : grid.rows) {
+            for (Tile tile : row.tiles){
+                if (tile.plant != null) {
+                    tile.plant.actionCurrent--;
+                    System.out.println(tile.plant.actionCurrent);
+                }
+            }
         }
     }
 }

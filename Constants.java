@@ -56,6 +56,9 @@ public class Constants {
     public static final int GAME_TURN_MOD = 1000 / GAME_SPEED;
 
     // Zombie Dimension
+    public static final int ZOMBIES_NORMAL_ATK_DELAY = 5;
+    public static final int ZOMBIES_NORMAL_GARGANTUAR_ATK_DELAY = 33;
+
     public static final int ZOMBIES_NORMAL_WIDTH = 70;
     public static final int ZOMBIES_CONEHEAD_WIDTH = 70;
     public static final int ZOMBIES_BUCKETHEAD_WIDTH = 80;
@@ -68,6 +71,12 @@ public class Constants {
     public static final int ZOMBIES_BRICKHEAD_HEIGHT = 127;
     public static final int ZOMBIES_GARGANTUAR_HEIGHT = 247;
 
+    public static final int ZOMBIES_NORMAL_HEALTH = 40;
+    public static final int ZOMBIES_CONEHEAD_HEALTH = 80;
+    public static final int ZOMBIES_BUCKETHEAD_HEALTH = 120;
+    public static final int ZOMBIES_BRICKHEAD_HEALTH = 160;
+    public static final int ZOMBIES_GARGANTUAR_HEALTH = 240;
+
     public static final int ZOMBIES_MOVESPEED_NORMAL_X = -1;
     public static final int ZOMBIES_MOVESPEED_FAST_X = -2;
     
@@ -76,6 +85,16 @@ public class Constants {
     public static final int SEEDPACKET_Y_START = 77;
     public static final int SEEDPACKET_HEIGHT = 50;
     public static final int SEEDPACKET_WIDTH = 100;
+
+    // Seed Packet Cooldown
+    public static final int SEEDPACKET_PEASHOOTER_COOLDOWN = 5 * GAME_SPEED;
+    public static final int SEEDPACKET_REPEATER_COOLDOWN = 6 * GAME_SPEED;
+    public static final int SEEDPACKET_THREEPEATER_COOLDOWN = 0 * GAME_SPEED;
+    public static final int SEEDPACKET_SUNFLOWER_COOLDOWN = 4 * GAME_SPEED;
+    public static final int SEEDPACKET_SPIKEWEED_COOLDOWN = 0 * GAME_SPEED;
+    public static final int SEEDPACKET_WALLNUT_COOLDOWN = 15 * GAME_SPEED;
+    public static final int SEEDPACKET_CHERRY_BOMB_COOLDOWN = 20 * GAME_SPEED;
+    public static final int SEEDPACKET_POTATO_MINE_COOLDOWN = 18 * GAME_SPEED;
 
     // Sun Dimension
     public static final int ENVIRONMENT_SUN_ICON_X_START = 50;
@@ -88,6 +107,8 @@ public class Constants {
 
     public static final int SUN_VALUE = 50;
     public static final int DEPTH_SUN = 2;
+
+    public static final int STARTING_SUN = 1000;
 
     // Plant Dimension
     public static final int PLANTS_PEASHOOTER_HEIGHT = 62;
@@ -110,6 +131,15 @@ public class Constants {
     public static final int PLANTS_SPIKEWEED_WIDTH = 60;
     public static final int PLANTS_CHERRY_BOMB_WIDTH = 60;
 
+    public static final int PLANTS_PEASHOOTER_HEALTH = 40;
+    public static final int PLANTS_THREEPEATER_HEALTH = 40;
+    public static final int PLANTS_CHERRY_BOMB_HEALTH = 40;
+    public static final int PLANTS_REPEATER_HEALTH = 40;
+    public static final int PLANTS_SUNFLOWER_HEALTH = 40;
+    public static final int PLANTS_WALLNUT_HEALTH = 2000;
+    public static final int PLANTS_SPIKEWEED_HEALTH = 2000;
+    public static final int PLANTS_POTATO_MINE_HEALTH = 40;
+
     // Plant Costs
     public static final int PLANTS_PEASHOOTER_COST = 100;
     public static final int PLANTS_THREEPEATER_COST = 250;
@@ -119,6 +149,26 @@ public class Constants {
     public static final int PLANTS_WALLNUT_COST = 50;
     public static final int PLANTS_SPIKEWEED_COST = 100;
     public static final int PLANTS_POTATO_MINE_COST = 25;
+
+    // Plant Action
+    public static final int PLANTS_PEASHOOTER_ACTIONTIME = 33;
+    public static final int PLANTS_THREEPEATER_ACTIONTIME = 33;
+    public static final int PLANTS_CHERRY_BOMB_ACTIONTIME = 2 * GAME_SPEED;
+    public static final int PLANTS_REPEATER_ACTIONTIME = 33;
+    public static final int PLANTS_REPEATER_ACTIONDELAY = 5;
+    public static final int PLANTS_SUNFLOWER_ACTIONTIME = 2 * GAME_SPEED;
+    public static final int PLANTS_WALLNUT_ACTIONTIME = 2 * GAME_SPEED;
+    public static final int PLANTS_SPIKEWEED_ACTIONTIME = 2 * GAME_SPEED;
+    public static final int PLANTS_POTATO_MINE_ACTIONTIME = 2 * GAME_SPEED;
+
+    // Projectile Dimension
+    public static final int ENVIRONMENT_CHERRY_BOMB_EXPLOSION_HEIGHT = 313;
+    public static final int ENVIRONMENT_POTATO_MINE_EXPLOSION_HEIGHT = 128;
+    public static final int ENVIRONMENT_PEA_PROJECTILE_HEIGHT = 22;
+
+    public static final int ENVIRONMENT_CHERRY_BOMB_EXPLOSION_WIDTH = 194;
+    public static final int ENVIRONMENT_POTATO_MINE_EXPLOSION_WIDTH = 194;
+    public static final int ENVIRONMENT_PEA_PROJECTILE_WIDTH = 24;
 
     private Constants(){}
 }

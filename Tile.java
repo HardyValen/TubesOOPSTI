@@ -7,15 +7,17 @@ public class Tile extends JButton{
     protected int posX;
     protected int posY;
     protected Plant plant;
-    float alpha = 0.5f;
+    protected float alpha = 0.5f;
+    protected Row row;
 
-    public Tile(){
+    public Tile(Row row){
         super();
         setBorderPainted(false);
         // setFocusPainted(false);
         // setContentAreaFilled(false);
         setEnabled(false);
         addMouseListener(new ML());
+        this.row = row;
     }
 
     public float getAlpha() {
@@ -28,8 +30,6 @@ public class Tile extends JButton{
 
     public void setPlant(Plant plant) {
         this.plant = plant;
-
-        
     }
 
     public void checkPlant(){

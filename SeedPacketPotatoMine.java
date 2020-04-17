@@ -16,8 +16,11 @@ public class SeedPacketPotatoMine extends SeedPacket {
         setBounds(Constants.SEEDPACKET_X_START, y, Constants.SEEDPACKET_WIDTH, Constants.SEEDPACKET_HEIGHT);
 
         // Set Cooldown
-        cdTime = 15 * Constants.GAME_TURN_MOD;
+        cdTime = Constants.SEEDPACKET_POTATO_MINE_COOLDOWN;
         cdCurrent = cdTime;
+
+        // SP Cost
+        cost = Constants.PLANTS_POTATO_MINE_COST;
     }
     
     public Plant getPlant(){

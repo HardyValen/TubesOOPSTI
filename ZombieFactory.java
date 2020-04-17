@@ -1,4 +1,3 @@
-import javax.swing.ImageIcon;
 import java.util.Random;
 
 public class ZombieFactory {
@@ -11,7 +10,11 @@ public class ZombieFactory {
 
         switch (zKey) {
             case ZOMBIES_NORMAL:
-                z = new Zombie(4, 40);
+                z = new Zombie(4, Constants.ZOMBIES_NORMAL_HEALTH);
+                z.hitboxWidth = Constants.ZOMBIES_NORMAL_WIDTH;
+                z.hitboxHeight = Constants.TILE_HEIGHT;
+                z.hitboxX = start_x;
+                z.hitboxY = start_y - Constants.TILE_HEIGHT;
                 z.setImage(ImageFactory.createImage(Image.ZOMBIES_NORMAL).getImage());
                 z.setX(start_x);
                 z.setY(start_y - Constants.ZOMBIES_NORMAL_HEIGHT);
@@ -19,7 +22,11 @@ public class ZombieFactory {
                 z.setDY(dy);
                 break;
             case ZOMBIES_CONEHEAD:
-                z = new Zombie(4, 80);
+                z = new Zombie(4, Constants.ZOMBIES_CONEHEAD_HEALTH);
+                z.hitboxWidth = Constants.ZOMBIES_CONEHEAD_WIDTH;
+                z.hitboxHeight = Constants.TILE_HEIGHT;
+                z.hitboxX = start_x;
+                z.hitboxY = start_y - Constants.TILE_HEIGHT;
                 z.setImage(ImageFactory.createImage(Image.ZOMBIES_CONEHEAD).getImage());
                 z.setX(start_x);
                 z.setY(start_y - Constants.ZOMBIES_CONEHEAD_HEIGHT);
@@ -27,7 +34,11 @@ public class ZombieFactory {
                 z.setDY(dy);
                 break;
             case ZOMBIES_BUCKETHEAD:
-                z = new Zombie(4, 120);
+                z = new Zombie(4, Constants.ZOMBIES_BUCKETHEAD_HEALTH);
+                z.hitboxWidth = Constants.ZOMBIES_BUCKETHEAD_WIDTH;
+                z.hitboxHeight = Constants.TILE_HEIGHT;
+                z.hitboxX = start_x;
+                z.hitboxY = start_y - Constants.TILE_HEIGHT;
                 z.setImage(ImageFactory.createImage(Image.ZOMBIES_BUCKETHEAD).getImage());
                 z.setX(start_x);
                 z.setY(start_y - Constants.ZOMBIES_BUCKETHEAD_HEIGHT);
@@ -35,7 +46,11 @@ public class ZombieFactory {
                 z.setDY(dy);
                 break;
             case ZOMBIES_BRICKHEAD:
-                z = new Zombie(4, 160);
+                z = new Zombie(4, Constants.ZOMBIES_BRICKHEAD_HEALTH);
+                z.hitboxWidth = Constants.ZOMBIES_BRICKHEAD_WIDTH;
+                z.hitboxHeight = Constants.TILE_HEIGHT;
+                z.hitboxX = start_x;
+                z.hitboxY = start_y - Constants.TILE_HEIGHT;
                 z.setImage(ImageFactory.createImage(Image.ZOMBIES_BRICKHEAD).getImage());
                 z.setX(start_x);
                 z.setY(start_y - Constants.ZOMBIES_BRICKHEAD_HEIGHT);
@@ -43,7 +58,11 @@ public class ZombieFactory {
                 z.setDY(dy);
                 break;
             case ZOMBIES_GARGANTUAR:
-                z = new Zombie(2000, 200);
+                z = new Zombie(2000, Constants.ZOMBIES_GARGANTUAR_HEALTH);
+                z.hitboxWidth = Constants.ZOMBIES_GARGANTUAR_WIDTH;
+                z.hitboxHeight = Constants.TILE_HEIGHT;
+                z.hitboxX = start_x;
+                z.hitboxY = start_y - Constants.TILE_HEIGHT;
                 z.setImage(ImageFactory.createImage(Image.ZOMBIES_GARGANTUAR).getImage());
                 z.setX(start_x);
                 z.setY(start_y - Constants.ZOMBIES_GARGANTUAR_HEIGHT);

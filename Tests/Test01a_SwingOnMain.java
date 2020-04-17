@@ -5,7 +5,7 @@ public static void main(String[] args) {
     JFrame f=new JFrame();//creating instance of JFrame  
             
     JButton b=new JButton("The Button");//creating instance of JButton  
-    b.setBounds(220,285,160,30);//x axis, y axis, width, height  
+    b.setBounds(220,285,160,30);//x axis, y axis, hitboxWidth, hitboxHeight  
             
     f.add(b);//adding button in JFrame  
             

@@ -5,8 +5,13 @@ public abstract class Entity implements Coordinate{
     private boolean isDead;     
     protected int x;
     protected int y;
+    protected int hitboxX;
+    protected int hitboxY;
     protected int dx;
     protected int dy;
+    protected int hitboxWidth;
+    protected int hitboxHeight;
+    protected boolean phaseable = false;
 
     public void setImage(Image image) {
         this.image = image;

@@ -5,7 +5,7 @@ public class Sun extends JButton {
     protected int x;
     protected int y;
     protected int dx = 0;
-    protected int dy = 1;
+    protected int dy = 3;
 
     public Sun(int x, int y){
         this.x = x;

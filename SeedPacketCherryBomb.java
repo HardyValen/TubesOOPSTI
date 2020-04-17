@@ -16,8 +16,11 @@ public class SeedPacketCherryBomb extends SeedPacket {
         setBounds(Constants.SEEDPACKET_X_START, y, Constants.SEEDPACKET_WIDTH, Constants.SEEDPACKET_HEIGHT);
         
         // Set Cooldown
-        cdTime = 20 * Constants.GAME_TURN_MOD;
+        cdTime = Constants.SEEDPACKET_CHERRY_BOMB_COOLDOWN;
         cdCurrent = cdTime;
+
+        // SP Cost
+        cost = Constants.PLANTS_CHERRY_BOMB_COST;
     }
 
     public Plant getPlant(){
