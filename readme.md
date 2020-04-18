@@ -24,7 +24,7 @@ Berbeda dengan tugas besar 1 yang ada pada branch master, pada tugas besar kali 
 
 2. Dengan allow executing file as program pada PvZBootleg.jar
 
-### Anggota Kelompok
+### Anggota Kelompok 14
 * Hardy Valenthio Amansyah (18218004)
 * Shafa Amarsya Madyararti (18218007)
 * Akbar Rizki Maulana (18218023)
